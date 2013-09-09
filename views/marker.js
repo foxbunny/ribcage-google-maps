@@ -84,7 +84,7 @@ define(function(require) {
         _this = this;
       cfg = {
         map: this.map,
-        position: this.model.coords,
+        position: this.model.coords(),
         title: this.model.title,
         animation: this.getMarkerAnim(this.markerAimation),
         flat: !this.markerShadow,

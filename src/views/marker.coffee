@@ -195,7 +195,7 @@ define (require) ->
     render: () ->
       cfg =
         map: @map
-        position: @model.coords
+        position: @model.coords()
         title: @model.title
         animation: @getMarkerAnim @markerAimation
         flat: not @markerShadow
