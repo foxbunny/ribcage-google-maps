@@ -213,7 +213,7 @@ define (require) ->
           @onClick()
 
       if @model.info? and (k for k of @model.info).length
-        @infoWindow = @createInfoWindow @model.info
+        @infoWindow = @createInfoWindow @model.get 'info'
       else
         @infoWindow = null
 

@@ -110,7 +110,7 @@ define(function(require) {
         }
         return _results;
       }).call(this)).length) {
-        return this.infoWindow = this.createInfoWindow(this.model.info);
+        return this.infoWindow = this.createInfoWindow(this.model.get('info'));
       } else {
         return this.infoWindow = null;
       }
