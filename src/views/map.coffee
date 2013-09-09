@@ -62,7 +62,8 @@ define (require) ->
     # Otherwise, the default is empty string.
     #
     # If this attribute is a function, it will be called without arguments and
-    # it will be expected to return the string to use as HTML.
+    # it will be expected to return the string to use as HTML. The resulting
+    # HTML will be appended into the `el`.
     #
     template: ''
 
