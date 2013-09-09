@@ -19,7 +19,8 @@ define = (function(root) {
 })(this);
 
 define(function() {
-  var mapDataModel, mapView, markerModel, markerView, markersCollection, markersView;
+  var latLongModel, mapDataModel, mapView, markerModel, markerView, markersCollection, markersView;
+  latLongModel = require('./models/latlong');
   mapDataModel = require('./models/map_data');
   markerModel = require('./models/marker');
   markersCollection = require('./collections/markers');
@@ -28,8 +29,10 @@ define(function() {
   markersView = require('./views/markers');
   return {
     models: {
+      latLongModel: latLongModel,
       mapDataModel: mapDataModel,
       markerModel: markerModel,
+      LatLongModel: latLongModel.Model,
       MapDataModel: mapDataModel.Model,
       MarkerModel: markerModel.Model
     },
@@ -51,6 +54,11 @@ define(function() {
       MapView: mapView.View,
       MarkerView: markerView.View,
       MarkersView: markersView.View
+    },
+    viewMixins: {
+      MapView: mapView.mixin,
+      MarkerView: markerView.mixin,
+      MarkersView: markersView.mixin
     }
   };
 });

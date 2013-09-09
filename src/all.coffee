@@ -23,6 +23,7 @@ define = ((root) ->
 ) this
 
 define () ->
+  latLongModel = require './models/latlong'
   mapDataModel = require './models/map_data'
   markerModel = require './models/marker'
 
@@ -32,9 +33,23 @@ define () ->
   markerView = require './views/marker'
   markersView = require './views/markers'
 
+  # ::TOC::
+  #
+
+  # ## Models
+  #
+  #  + [LatLongModel](doc/models/latlong.mkd) - Base model for models that
+  #    prepresents coordinates.
+  #  + [MapDataModel](doc/models/map_data.mkd) - Handles basic map data
+  #    (position, heading, pov).
+  #  + [MarkerModel](doc/models/marker.mkd) - Represents the data for a single
+  #    marker and associated info window.
+  #
   models:
+    latLongModel: latLongModel
     mapDataModel: mapDataModel
     markerModel: markerModel
+    LatLongModel: latLongModel.Model
     MapDataModel: mapDataModel.Model
     MarkerModel: markerModel.Model
 
@@ -42,6 +57,11 @@ define () ->
     MapDataModel: mapDataModel.mixin
     MarkerModel: markerModel.mixin
 
+  # ## Collections
+  #
+  #  + [MarkersCollection](doc/collections/markers.mkd) - Represents a
+  #    collection of markers.
+  #
   collections:
     markersCollection: markersCollection
     MarkersCollection: markersCollection.Collection
@@ -49,6 +69,15 @@ define () ->
   collectionMixins:
     MarkersCollection: markersCollection.mixin
 
+  # ## Views
+  #
+  #  + [MapView](doc/views/map.mkd) - The main map view: handles the rendering
+  #    and presentation of the map.
+  #  + [MarkerView](doc/views/marker) - Handles the rendering and presentation
+  #    of a single map marker and its info window.
+  #  + [MarkersView](doc/views/markers) - Handles the rendering and
+  #    presentation of a collection of markers with related views.
+  #
   views:
     mapView: mapView
     markerView: markerView
@@ -56,4 +85,9 @@ define () ->
     MapView: mapView.View
     MarkerView: markerView.View
     MarkersView: markersView.View
+
+  viewMixins:
+    MapView: mapView.mixin
+    MarkerView: markerView.mixin
+    MarkersView: markersView.mixin
 
