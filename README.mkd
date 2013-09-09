@@ -1,4 +1,4 @@
-# Robcage-Google-Maps
+# Ribcage-Google-Maps
 
 This library adds support for [Google Maps JavaScript API
 v3](https://developers.google.com/maps/documentation/javascript/) to
