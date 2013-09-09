@@ -46,6 +46,10 @@ define () ->
   #
   MarkersCollection = BaseCollection.extend markersCollectionMixin
 
+  # ## Exports
+  #
+  # This module exports `mixin` and `Collection` properties.
+  #
   mixin: markersCollectionMixin
   Collection: MarkersCollection
 

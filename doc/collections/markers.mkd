@@ -12,6 +12,7 @@ This module depeds on `ribcage.collections.BaseCollection`
 
  + [`markersCollectionMixin`](#markerscollectionmixin)
  + [`MarkersCollection`](#markerscollection)
+ + [Exports](#exports)
 
 
 ## `markersCollectionMixin` <a name="markerscollectionmixin"></a>
@@ -26,3 +27,7 @@ features such as clustering in this collection mixin.
 Please look at the documentation for
 [`markersCollectionMixin`](#markerscollectionmixin) for more information about
 this collection's API.
+
+## Exports <a name="exports"></a>
+
+This module exports `mixin` and `Collection` properties.
