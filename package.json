@@ -19,7 +19,7 @@
     "volo": "*",
     "coffee-script": "1.6.3"
   },
-  "main": "main.js",
+  "main": "all.js",
   "volo": {
     "dependencies": {
       "ribcage": "foxbunny/ribcage",
