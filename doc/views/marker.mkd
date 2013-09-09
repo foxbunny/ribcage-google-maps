@@ -17,16 +17,19 @@ This module depends on Google Maps JavaScript API v3 library, Underscore, and
    - [`#markerClickable`](#markerclickable)
    - [`#markerDraggable`](#markerdraggable)
    - [`#markerIcon`](#markericon)
-   - [`markerShape`](#markershape)
+   - [`#markerShape`](#markershape)
    - [`#markerVisible`](#markervisible)
    - [`#infoTemplateSource`](#infotemplatesource)
    - [`#infoTemplate(data)`](#infotemplate-data)
    - [`#infoWindowAutoPan`](#infowindowautopan)
    - [`#infoWindowOffset`](#infowindowoffset)
-   - [`createInfoWindow(data)`](#createinfowindow-data)
+   - [`#createInfoWindow(data)`](#createinfowindow-data)
    - [`#getMarkerAnim(v)`](#getmarkeranim-v)
    - [`#onClick()`](#onclick)
    - [`#render()`](#render)
+   - [`#show()`](#show)
+   - [`#hide()`](#hide)
+   - [`#remove()`](#remove)
 
 
 ## `markerViewMixin` <a name="markerviewmixin"></a>
@@ -72,7 +75,7 @@ Whether marker is draggable. Default is `false`
 Sets the marker icon. Can be the URL of the icon, or `google.maps.Icon` or
 `google.maps.Symbol` object. Default is `null` (use default icon).
 
-### `markerShape` <a name="markershape"></a>
+### `#markerShape` <a name="markershape"></a>
 
 Image map definiton of the the marker. Must be compatible with
 `google.maps.MarkerShape`
@@ -101,13 +104,13 @@ Renders the `#infoTemplateSource` using Underscore.
 ### `#infoWindowAutoPan` <a name="infowindowautopan"></a>
 
 Whether info window will automatically pan whe map is panned. Default is
-`true`.
+`true`We need models attribute not the whole collection.
 
 ### `#infoWindowOffset` <a name="infowindowoffset"></a>
 
 The offset in pixels from the position at which it is rendered. Default is 0.
 
-### `createInfoWindow(data)` <a name="createinfowindow-data"></a>
+### `#createInfoWindow(data)` <a name="createinfowindow-data"></a>
 
 Create a `google.maps.InfoWindow` object from given context data.
 
@@ -132,3 +135,17 @@ existing instaces are updated. This means that calling `#render()` multiple
 times will not result in new markers except for the very first time.
 
 You generally shouldn't overload this method.
+
+### `#show()` <a name="show"></a>
+
+Show the marker.
+
+This method renders the marker first if it hasn't been rendered before.
+
+### `#hide()` <a name="hide"></a>
+
+Hide the marker.
+
+### `#remove()` <a name="remove"></a>
+
+Completely remove the marker from the map, and unbind any bound events from it.

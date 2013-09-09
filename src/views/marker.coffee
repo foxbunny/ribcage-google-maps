@@ -94,7 +94,7 @@ define (require) ->
     #
     markerIcon: null
 
-    # ### `markerShape`
+    # ### `#markerShape`
     #
     # Image map definiton of the the marker. Must be compatible with
     # `google.maps.MarkerShape`
@@ -143,7 +143,7 @@ define (require) ->
     #
     infoWindowOffset: 0
 
-    # ### `createInfoWindow(data)`
+    # ### `#createInfoWindow(data)`
     #
     # Create a `google.maps.InfoWindow` object from given context data.
     #
@@ -219,15 +219,30 @@ define (require) ->
       else
         @infoWindow = null
 
+    # ### `#show()`
+    #
+    # Show the marker.
+    #
+    # This method renders the marker first if it hasn't been rendered before.
+    #
     show: () ->
       if not @marker?
         @render()
       @marker.setVisible true
 
+    # ### `#hide()`
+    #
+    # Hide the marker.
+    #
     hide: () ->
       return if not @marker
       @marker.setVisible false
 
+    # ### `#remove()`
+    #
+    # Completely remove the marker from the map, and unbind any bound events
+    # from it.
+    #
     remove: () ->
       return if not @marker?
       maps.event.clearListeners @marker
