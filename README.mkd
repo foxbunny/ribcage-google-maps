@@ -23,5 +23,10 @@ TODO
 
 ## Shimming the gmaps module
 
-Please see API documentation in [`docs/lib/gmaps.mkd`](doc/lib/gmaps.mkd).
+Please see API documentation in [`doc/gmaps.mkd`](doc/gmaps.mkd).
+
+## API documentation
+
+Complete API documentation is located in the [`doc` directory](doc). These
+files are Markdown files generated from the source code.
 
