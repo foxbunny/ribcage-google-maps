@@ -251,7 +251,16 @@ define (require) ->
       @infoWindow?.setMap null
       @infoWindow = null
 
+  # ## `MarkerView`
+  #
+  # Please see the documentation for [`markerViewMixin`](#markerviewmixin) for
+  # more information about this view's API.
+  #
   MarkerView = BaseView.extend markerViewMixin
 
+  # ## Exports
+  #
+  # This module exports `mixin` and `View` properties.
+  #
   mixin: markerViewMixin
   View: MarkerView

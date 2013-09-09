@@ -52,7 +52,17 @@ define (require) ->
       info: {}
     , latLongModel.mixin.defaults
 
+  # ## `MarkerModel`
+  #
+  # Please see the documentation for
+  # [`mapMarkerModelMixin`](#mapmarkermodelmixin) for more information about
+  # this model's API.
+  #
   MarkerModel = latLongModel.Model.extend mapMarkerModelMixin
 
+  # ## Exports
+  #
+  # This module exports `mixin` and `Model` properties.
+  #
   mixin: mapMarkerModelMixin
   Model: MarkerModel

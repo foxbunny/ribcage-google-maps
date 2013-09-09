@@ -32,7 +32,7 @@ you are not using an AMD module loader, you _must_ load this module first.
 
  + [MapView](views/map.mkd) - The main map view: handles the rendering
    and presentation of the map.
- + [MarkerView](views/marker) - Handles the rendering and presentation
+ + [MarkerView](views/marker.mkd) - Handles the rendering and presentation
    of a single map marker and its info window.
- + [MarkersView](views/markers) - Handles the rendering and
+ + [MarkersView](views/markers.mkd) - Handles the rendering and
    presentation of a collection of markers with related views.

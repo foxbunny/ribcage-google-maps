@@ -30,6 +30,8 @@ This module depends on Google Maps JavaScript API v3 library, Underscore, and
    - [`#show()`](#show)
    - [`#hide()`](#hide)
    - [`#remove()`](#remove)
+ + [`MarkerView`](#markerview)
+ + [Exports](#exports)
 
 
 ## `markerViewMixin` <a name="markerviewmixin"></a>
@@ -149,3 +151,12 @@ Hide the marker.
 ### `#remove()` <a name="remove"></a>
 
 Completely remove the marker from the map, and unbind any bound events from it.
+
+## `MarkerView` <a name="markerview"></a>
+
+Please see the documentation for [`markerViewMixin`](#markerviewmixin) for more
+information about this view's API.
+
+## Exports <a name="exports"></a>
+
+This module exports `mixin` and `View` properties.

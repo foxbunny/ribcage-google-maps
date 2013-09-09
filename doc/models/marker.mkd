@@ -10,6 +10,8 @@ loader such as RequireJS.
 This module depends on DaHelpers and `ribcageGoogleMaps.latLongModel`.
 
  + [`markerModelMixin`](#markermodelmixin)
+ + [`MarkerModel`](#markermodel)
+ + [Exports](#exports)
 
 
 ## `markerModelMixin` <a name="markermodelmixin"></a>
@@ -20,3 +22,13 @@ It extends the `LatLongModel` to add the following attributes:
 
  + title - the roll-over title (string)
  + info - context information for info window (should be an object)
+
+
+## `MarkerModel` <a name="markermodel"></a>
+
+Please see the documentation for [`mapMarkerModelMixin`](#mapmarkermodelmixin)
+for more information about this model's API.
+
+## Exports <a name="exports"></a>
+
+This module exports `mixin` and `Model` properties.

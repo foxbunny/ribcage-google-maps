@@ -13,6 +13,8 @@ This module depends on DaHelpers and `ribcageGoogleMaps.latLongModel.
  + [`mapDataModelMixin`](#mapdatamodelmixin)
    - [`#heading(v)`](#heading-v)
    - [`#pitch(v)`](#pitch-v)
+   - [`MapDataModel`](#mapdatamodel)
+ + [Exports](#exports)
 
 
 ## `mapDataModelMixin` <a name="mapdatamodelmixin"></a>
@@ -34,3 +36,12 @@ This is an accessor for the `pitch` attribute. The setting will convert any
 value to float. The value will be `NaN` if it cannot be parsed by `parseFloat`.
 
 Returns current value if given no arguments, otherwise sets the value to `v`.
+
+### `MapDataModel` <a name="mapdatamodel"></a>
+
+Please see the documenation for [`mapDataModelMixin`](#mapdatamodelmixin) for
+more information about this model's API.
+
+## Exports <a name="exports"></a>
+
+This module exports `mixin` and `Model` properties.

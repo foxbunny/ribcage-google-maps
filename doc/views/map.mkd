@@ -59,6 +59,8 @@ This module depends on Google Maps API v3 library, Underscore, jQuery, and
    - [`#getStreetView(cfg)`](#getstreetview-cfg)
    - [`#getMapOpts([cfg,] data)`](#getmapopts-cfg-data)
    - [`#render()`](#render)
+ + [`MapView`](#mapview)
+ + [Exports](#exports)
 
 
 ## `mapViewMixin` <a name="mapviewmixin"></a>
@@ -501,3 +503,12 @@ map will update automatically whenever model data changes.
 ### `#render()` <a name="render"></a>
 
 Renders the map and stores the reference to rendered map as `this.map`.
+
+## `MapView` <a name="mapview"></a>
+
+Please see the documentation for [`mapViewMixin`](#mapViewMixin) for more
+information about this view's API.
+
+## Exports <a name="exports"></a>
+
+This module exports `mixin` and `View` properties.

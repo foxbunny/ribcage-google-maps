@@ -94,7 +94,16 @@ define (require) ->
         @lat(lat)
         @long(long)
 
+  # ## `LatLongModel`
+  #
+  # Please see the documentation for [`latLongModelMixin`](#latlongmodelmixin)
+  # for more information about this model's API.
+  #
   LatLongModel = BaseModel.extend latLongModelMixin
 
+  # ## Exports
+  #
+  # This module exports `mixin` and `Model` properties.
+  #
   mixin: latLongModelMixin
   Model: LatLongModel

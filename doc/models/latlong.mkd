@@ -15,6 +15,8 @@ This module depends on Google Maps API v3 library and
    - [`#lat([v])`](#lat-v)
    - [`#long([v])`](#long-v)
    - [`#coords([lat, long])`](#coords-lat-long)
+ + [`LatLongModel`](#latlongmodel)
+ + [Exports](#exports)
 
 
 ## `latLongModelMixin` <a name="latlongmodelmixin"></a>
@@ -46,3 +48,12 @@ longitude.
 
 Returns `google.maps.LatLng` instance if called without argumetns, otherwise
 sets latitude and longitude when passed the arguments.
+
+## `LatLongModel` <a name="latlongmodel"></a>
+
+Please see the documentation for [`latLongModelMixin`](#latlongmodelmixin) for
+more information about this model's API.
+
+## Exports <a name="exports"></a>
+
+This module exports `mixin` and `Model` properties.

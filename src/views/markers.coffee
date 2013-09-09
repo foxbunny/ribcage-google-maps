@@ -103,7 +103,16 @@ define (require) ->
       view.remove() for view in @childViews
       @childViews = []
 
+  # ## `MarkersView`
+  #
+  # Please see documentation for [`markersViewMixin`](#markersViewMixin) for
+  # more information about this view's API.
+  #
   MarkersView = BaseView.extend markersViewMixin
 
+  # ## Exports
+  #
+  # This module exports `mixin` and `View` properties.
+  #
   mixin: markersViewMixin
   View: MarkersView

@@ -724,8 +724,17 @@ define (require) ->
       else:
         @map = new maps.Map @getMapContainer(), cfg
 
+  # ## `MapView`
+  #
+  # Please see the documentation for [`mapViewMixin`](#mapViewMixin) for more
+  # information about this view's API.
+  #
   MapView = BaseView.extend mapViewMixin
 
+  # ## Exports
+  #
+  # This module exports `mixin` and `View` properties.
+  #
   mixin: mapViewMixin
   View: MapView
 

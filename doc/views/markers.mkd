@@ -49,3 +49,12 @@ Renders all marker views.
 ### `#remove()` <a name="remove"></a>
 
 Removes all child views and their markers.
+
+## `MarkersView` <a name="markersview"></a>
+
+Please see documentation for [`markersViewMixin`](#markersViewMixin) for more
+information about this view's API.
+
+## Exports <a name="exports"></a>
+
+This module exports `mixin` and `View` properties.

@@ -79,8 +79,17 @@ define (require) ->
       else
         @set pitch: parseFloat v
 
+  # ### `MapDataModel`
+  #
+  # Please see the documenation for [`mapDataModelMixin`](#mapdatamodelmixin)
+  # for more information about this model's API.
+  #
   MapDataModel = latLongModel.Model.extend mapDataModelMixin
 
+  # ## Exports
+  #
+  # This module exports `mixin` and `Model` properties.
+  #
   mixin: mapDataModelMixin
   Model: MapDataModel
 
