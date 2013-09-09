@@ -2,7 +2,7 @@
 var define;
 
 define = (function(root) {
-  if (typeof root.define === 'function' && define.amd) {
+  if (typeof root.define === 'function' && root.define.amd) {
     return root.define;
   } else {
     return function() {};

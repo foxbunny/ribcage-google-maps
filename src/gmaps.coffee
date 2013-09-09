@@ -55,7 +55,7 @@
 #
 
 define = ((root) ->
-  if typeof root.define is 'function' and define.amd
+  if typeof root.define is 'function' and root.define.amd
     return root.define
   else
     () ->
