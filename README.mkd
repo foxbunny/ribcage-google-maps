@@ -12,18 +12,30 @@ The library is still work in progress, so please don't expect miracles.
 ## Requirements
 
 This library depends on Ribcage and require-async module (if used with
-RequireJS). It, naturally, also requires the Google Maps API v3 library. When
-using as AMD modules, you will need to adjust your RequireJS and build
-configuration. Please see the section on [shimming](#shimming-the-gmaps-module)
-for more details.
+RequireJS). It, naturally, also requires the Google Maps API v3 library. 
 
 ## Installation
 
-TODO
+Ribcage-Google-Maps modules are in UMD format. This means you can either use
+them with an AMD module loader such as [RequireJS](http://requirejs.org/) or
+with classic `<script>` tags. If you wish to use this library with an AMD
+loader, please also consult the [next section](#shimming-the-gmaps-module).
+
+When loading modules using the `<script>` tag, please make sure `all.js` is
+loaded before other modules. Also, when adding the modules using `<script>`
+tags, the UMD wrapper will do a basic dependency check and you may receive
+exceptions if the dependencies are not available.
 
 ## Shimming the gmaps module
 
-Please see API documentation in [`doc/gmaps.mkd`](doc/gmaps.mkd).
+When using as AMD modules, you will need to adjust your RequireJS and build
+configuration. This is due to the way Google Maps API library is loaded, and
+because the API key can only be specified in the library's URL.
+
+Please see API documentation in [`doc/gmaps.mkd`](doc/gmaps.mkd) for
+recommended setup. You may also substitute `gmaps.js` with your own version
+that does things differently (e.g., downloaded version of Google Maps API
+library, etc).
 
 ## API documentation
 
