@@ -259,7 +259,12 @@ define(function(require) {
       var cfg;
       this.$el.html((typeof this.template === 'function' ? this.template() : this.template));
       cfg = this.getMapOpts(this.mapExtraConfigs, this.model);
-      return this.map = new maps.Map(this.getMapContainer(), cfg);
+      if (this.map != null) {
+        this.map.setOptions(cfg);
+      }
+      return {
+        "else": this.map = new maps.Map(this.getMapContainer(), cfg)
+      };
     }
   };
   MapView = BaseView.extend(mapViewMixin);

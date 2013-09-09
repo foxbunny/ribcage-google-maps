@@ -715,7 +715,11 @@ define (require) ->
         if typeof @template is 'function' then @template() else @template
       )
       cfg = @getMapOpts @mapExtraConfigs, @model
-      @map = new maps.Map @getMapContainer(), cfg
+
+      if @map?
+        @map.setOptions(cfg)
+      else:
+        @map = new maps.Map @getMapContainer(), cfg
 
   MapView = BaseView.extend mapViewMixin
 
