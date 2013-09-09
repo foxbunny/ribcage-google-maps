@@ -57,7 +57,7 @@ This module depends on Google Maps API v3 library, Underscore, jQuery, and
    - [`#getMapContainer()`](#getmapcontainer)
    - [`#getStreetViewContainer()`](#getstreetviewcontainer)
    - [`#getStreetView(cfg)`](#getstreetview-cfg)
-   - [`#getMapOpts(cfg)`](#getmapopts-cfg)
+   - [`#getMapOpts([cfg,] data)`](#getmapopts-cfg-data)
    - [`#render()`](#render)
 
 
@@ -477,13 +477,15 @@ Return the node to use a the Street View container.
 
 Returns the `maps.StreetViewPanorama` instance.
 
-### `#getMapOpts(cfg)` <a name="getmapopts-cfg"></a>
+### `#getMapOpts([cfg,] data)` <a name="getmapopts-cfg-data"></a>
 
 Compiles the options object for use with the Maps API `Map` constructor. The
 `cfg` argument should contain any overrides for the options defined in the view
-constructor.
+constructor. It defaults to `{}` if not supplied. The `data` argument should
+contain the model.
 
-Set the defaults from the view constructor ### `#initialize(settings)` ->
+Set the defaults from the view constructor Set data contained in the model
+Convert to Google Maps API format ### `#initialize(settings)` ->
 
 The settings object may contain a `mapConfig` key that will be used to
 dynamically specify or override options set in the view constructor.

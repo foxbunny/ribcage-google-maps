@@ -12,28 +12,37 @@ This module depends on Google Maps API v3 library and
 `ribcage.models.BaseModel`.
 
  + [`latLongModelMixin`](#latlongmodelmixin)
-   - [`#lat`](#lat)
-   - [`#long`](#long)
-   - [`#coords`](#coords)
+   - [`#lat([v])`](#lat-v)
+   - [`#long([v])`](#long-v)
+   - [`#coords([lat, long])`](#coords-lat-long)
 
 
 ## `latLongModelMixin` <a name="latlongmodelmixin"></a>
 
 This mixin implements the API of the `LatLongModel`.
 
-### `#lat` <a name="lat"></a>
+### `#lat([v])` <a name="lat-v"></a>
 
 This is an accessor for the `lat` attribute. The setter will convert any value
 to a float. The value will be `NaN` if it cannot be parsed by `parseFloat`.
 
-### `#long` <a name="long"></a>
+When called without arguments it returns the current value. Otherwise sets the
+value to `v`.
+
+### `#long([v])` <a name="long-v"></a>
 
 This is an accessor for the `long` attribute. The setting will convert any
 value to float. The value will be `NaN` if it cannot be parsed by `parseFloat`.
 
-### `#coords` <a name="coords"></a>
+Returns current value when called without arguments, otherwise sets value to
+`v`.
+
+### `#coords([lat, long])` <a name="coords-lat-long"></a>
 
 This is a shortcut for getting a `google.maps.LatLng` object based on the `lat`
 and `long` attributes. When setting a new value using this accessor, you must
 pass it an array of two float values that represent the lattitude and
 longitude.
+
+Returns `google.maps.LatLng` instance if called without argumetns, otherwise
+sets latitude and longitude when passed the arguments.

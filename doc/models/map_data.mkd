@@ -11,8 +11,8 @@ loader such as RequireJS.
 This module depends on DaHelpers and `ribcageGoogleMaps.latLongModel.
 
  + [`mapDataModelMixin`](#mapdatamodelmixin)
-   - [`#heading`](#heading)
-   - [`#pitch`](#pitch)
+   - [`#heading(v)`](#heading-v)
+   - [`#pitch(v)`](#pitch-v)
 
 
 ## `mapDataModelMixin` <a name="mapdatamodelmixin"></a>
@@ -21,12 +21,16 @@ This mixin implements the API of the `MapDataModel`.
 
 It extends the `LatLongModel` to add heading and pitch information.
 
-### `#heading` <a name="heading"></a>
+### `#heading(v)` <a name="heading-v"></a>
 
 This is an accessor for the `heading` attribute. The setting will convert any
 value to float. The value will be `NaN` if it cannot be parsed by `parseFloat`.
 
-### `#pitch` <a name="pitch"></a>
+Returns current value if passed no arguments, otherwise sets the value to `v`.
+
+### `#pitch(v)` <a name="pitch-v"></a>
 
 This is an accessor for the `pitch` attribute. The setting will convert any
 value to float. The value will be `NaN` if it cannot be parsed by `parseFloat`.
+
+Returns current value if given no arguments, otherwise sets the value to `v`.
