@@ -49,7 +49,7 @@ define(function(require) {
     markerVisible: true,
     infoTemplateSource: '',
     infoTemplate: function(data) {
-      return _.template(this.infoTemplateSource(data));
+      return _.template(this.infoTemplateSource, data);
     },
     infoWindowAutoPan: true,
     infoWindowOffset: 0,
@@ -75,12 +75,12 @@ define(function(require) {
       return maps.Animation[v.toUpperCase()];
     },
     onClick: function() {
-      if (this.infoWindow) {
+      if (this.infoWindow != null) {
         return this.infoWindow.open(this.map, this.marker);
       }
     },
     render: function() {
-      var cfg, k,
+      var cfg, info, k,
         _this = this;
       cfg = {
         map: this.map,
@@ -102,15 +102,16 @@ define(function(require) {
           return _this.onClick();
         });
       }
-      if ((this.model.info != null) && ((function() {
+      info = this.model.get('info');
+      if ((info != null) && ((function() {
         var _results;
         _results = [];
-        for (k in this.model.info) {
+        for (k in info) {
           _results.push(k);
         }
         return _results;
-      }).call(this)).length) {
-        return this.infoWindow = this.createInfoWindow(this.model.get('info'));
+      })()).length) {
+        return this.infoWindow = this.createInfoWindow(info);
       } else {
         return this.infoWindow = null;
       }

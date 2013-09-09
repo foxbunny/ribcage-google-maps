@@ -127,7 +127,7 @@ define (require) ->
     # Renders the `#infoTemplateSource` using Underscore.
     #
     infoTemplate: (data) ->
-      _.template @infoTemplateSource data
+      _.template @infoTemplateSource, data
 
     # ### `#infoWindowAutoPan`
     #
@@ -177,7 +177,7 @@ define (require) ->
     # marker.
     #
     onClick: () ->
-      if @infoWindow
+      if @infoWindow?
         @infoWindow.open @map, @marker
 
     # ### `#render()`
@@ -212,8 +212,10 @@ define (require) ->
         maps.event.addListener @marker, 'click', () =>
           @onClick()
 
-      if @model.info? and (k for k of @model.info).length
-        @infoWindow = @createInfoWindow @model.get 'info'
+      info = @model.get('info')
+
+      if info? and (k for k of info).length
+        @infoWindow = @createInfoWindow info
       else
         @infoWindow = null
 
