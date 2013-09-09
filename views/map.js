@@ -36,13 +36,12 @@ define = (function(root) {
 })(this);
 
 define(function(require) {
-  var $, BaseView, mapViewMixin, maps, _;
+  var $, BaseView, MapView, mapViewMixin, maps, _;
   _ = require('underscore');
   $ = require('jquery');
   BaseView = require('ribcage/views/base').View;
-  require('../gmaps');
-  maps = google.maps;
-  return mapViewMixin = {
+  maps = require('../gmaps');
+  mapViewMixin = {
     template: '',
     mapContainer: null,
     mapType: 'roadmap',
@@ -244,5 +243,10 @@ define(function(require) {
       };
       return this.map = maps.Map(this.getMapContainer(), cfg);
     }
+  };
+  MapView = BaseView.extend(mapViewMixin);
+  return {
+    mixin: mapViewMixin,
+    View: MapView
   };
 });

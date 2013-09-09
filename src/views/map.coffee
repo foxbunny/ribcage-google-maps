@@ -708,3 +708,8 @@ define (require) ->
 
       @map = maps.Map @getMapContainer(), cfg
 
+  MapView = BaseView.extend mapViewMixin
+
+  mixin: mapViewMixin
+  View: MapView
+

@@ -39,7 +39,7 @@ define(function(require) {
     defaults: dh.extend({
       heading: 0,
       pitch: 0
-    }, latLongModelMixin.mixin.defaults)
+    }, latLongModel.mixin.defaults)
   };
   Object.defineProperty(mapDataModelMixin, 'heading', {
     get: function() {
@@ -61,7 +61,7 @@ define(function(require) {
       });
     }
   });
-  MapDataModel = latLongModelMixin.Model.extend(mapDataModelMixin);
+  MapDataModel = latLongModel.Model.extend(mapDataModelMixin);
   return {
     mixin: mapDataModelMixin,
     Model: MapDataModel

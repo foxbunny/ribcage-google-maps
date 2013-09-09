@@ -34,8 +34,7 @@ define = (function(root) {
 define(function(require) {
   var BaseModel, LatLng, LatLongModel, latLongModelMixin;
   BaseModel = require('ribcage/models/base').Model;
-  require('../gmaps');
-  LatLng = google.maps.LatLng;
+  LatLng = require('../gmaps').LatLng;
   latLongModelMixin = {
     defaults: {
       lat: 0,
