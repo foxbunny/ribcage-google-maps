@@ -40,7 +40,8 @@ define(function(require) {
   _ = require('underscore');
   $ = require('jquery');
   BaseView = require('ribcage/views/base').View;
-  maps = require('../gmaps');
+  require('../gmaps');
+  maps = google.maps;
   return mapViewMixin = {
     template: '',
     mapContainer: null,

@@ -32,7 +32,9 @@ define (require) ->
   # and `ribcage.views.BaseView`.
   #
   {View: BaseView} = require 'ribcage/view/base'
-  maps = require '../gmaps'
+  require '../gmaps'
+
+  maps = google.maps
 
   # ::TOC::
   #

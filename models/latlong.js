@@ -34,14 +34,15 @@ define = (function(root) {
 define(function(require) {
   var BaseModel, LatLng, LatLongModel, latLongModelMixin;
   BaseModel = require('ribcage/models/base').Model;
-  LatLng = require('../gmaps').LatLng;
+  require('../gmaps');
+  LatLng = google.maps.LatLng;
   latLongModelMixin = {
     defaults: {
       lat: 0,
       long: 0
     }
   };
-  Object.defineProperty(mapDataModelMixin, 'lat', {
+  Object.defineProperty(latLongModelMixin, 'lat', {
     get: function() {
       return this.get('lat');
     },
@@ -51,7 +52,7 @@ define(function(require) {
       });
     }
   });
-  Object.defineProperty(mapDataModelMixin, 'long', {
+  Object.defineProperty(latLongModelMixin, 'long', {
     get: function() {
       return this.get('long');
     },
@@ -61,7 +62,7 @@ define(function(require) {
       });
     }
   });
-  Object.defineProperty(mapDataModelMixin, 'coords', {
+  Object.defineProperty(latLongModelMixin, 'coords', {
     get: function() {
       return new LatLng(this.lat, this.long, false);
     },

@@ -25,8 +25,8 @@
 #
 # When using volo, the dummy AMD module comtained in this module will suppress
 # conversion to AMD format by including a simple dummy AMD module that does not
-# include any dependencies and exports nothing. You will still have to include
-# the shim as described above.
+# include any dependencies and exports the google.maps global.
+# You will still have to include the shim as described above.
 #
 # ## Configuring the build
 #
@@ -62,4 +62,4 @@ define = ((root) ->
 ) this
 
 define () ->
-  null
+  google?.maps

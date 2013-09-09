@@ -10,5 +10,5 @@ define = (function(root) {
 })(this);
 
 define(function() {
-  return null;
+  return typeof google !== "undefined" && google !== null ? google.maps : void 0;
 });

@@ -33,7 +33,9 @@ define (require) ->
   # `ribcage.models.BaseModel`.
   #
   {Model: BaseModel} = require 'ribcage/models/base'
-  {LatLng} = require '../gmaps'
+  require '../gmaps'
+
+  {LatLng} = google.maps
 
   # ::TOC::
   #
@@ -53,7 +55,7 @@ define (require) ->
   # value to a float. The value will be `NaN` if it cannot be parsed by
   # `parseFloat`.
   #
-  Object.defineProperty mapDataModelMixin, 'lat',
+  Object.defineProperty latLongModelMixin, 'lat',
     get: () -> @get 'lat'
     set: (v) -> @set lat: parseFloat v
 
@@ -63,7 +65,7 @@ define (require) ->
   # value to float. The value will be `NaN` if it cannot be parsed by
   # `parseFloat`.
   #
-  Object.defineProperty mapDataModelMixin, 'long',
+  Object.defineProperty latLongModelMixin, 'long',
     get: () -> @get 'long'
     set: (v) -> @set long: parseFloat v
 
@@ -74,7 +76,7 @@ define (require) ->
   # you must pass it an array of two float values that represent the lattitude
   # and longitude.
   #
-  Object.defineProperty mapDataModelMixin, 'coords',
+  Object.defineProperty latLongModelMixin, 'coords',
     get: () -> new LatLng @lat, @long, false
     set: (v) -> [@lat, @long] = v
 
