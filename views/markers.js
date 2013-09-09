@@ -31,10 +31,10 @@ define = (function(root) {
 })(this);
 
 define(function(require) {
-  var BaseView, MarkerView, markersViewMixin;
+  var BaseView, MarkerView, MarkersView, markersViewMixin;
   BaseView = require('ribcage/views/base').View;
   MarkerView = require('./marker').View;
-  return markersViewMixin = {
+  markersViewMixin = {
     initialize: function(_arg) {
       this.map = _arg.map;
       return this.collection.on('change', this.render, this);
@@ -77,5 +77,10 @@ define(function(require) {
       }
       return this.childViews = [];
     }
+  };
+  MarkersView = BaseView.extend(markersViewMixin);
+  return {
+    mixin: markersViewMixin,
+    View: MarkersView
   };
 });

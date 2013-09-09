@@ -103,4 +103,7 @@ define (require) ->
       view.remove() for view in @childViews
       @childViews = []
 
+  MarkersView = BaseView.extend markersViewMixin
 
+  mixin: markersViewMixin
+  View: MarkersView
