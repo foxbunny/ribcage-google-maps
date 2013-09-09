@@ -6,6 +6,8 @@ due to the way Google Maps API library is loaded. On the other hand, this also
 presents an opportunity to configure the API key which cannot be otherwise set
 at runtime, and therefore Ribcage-Google-Maps cannot support setting.
 
+## Shimming with RequireJS config <a name="shimming-with-requirejs-config"></a>
+
 Here is an example of a 'gmaps' shim for RequireJS:
 
     shim: {
@@ -15,6 +17,21 @@ Here is an example of a 'gmaps' shim for RequireJS:
       }
     }
 
+
+The `lib` directory contains a `gmaps.js` module which is an empty JS file used
+to make the above shimming work.
+
+## Notes on installing with volo <a name="notes-on-installing-with-volo"></a>
+
+When using volo, the dummy AMD module comtained in this module will suppress
+conversion to AMD format by including a simple dummy AMD module that does not
+include any dependencies and exports nothing. You will still have to include
+the shim as described above.
+
+## Configuring the build <a name="configuring-the-build"></a>
+
+Regardless of what method you used to shim the `gmaps` module, you will still
+need to make adjustments for the build.
 
 When building, the shimmed 'gmap' module should be excluded to prevent errors:
 
@@ -26,8 +43,7 @@ When building, the shimmed 'gmap' module should be excluded to prevent errors:
     ]
 
 
-The `lib` directory contains a `gmaps.js` module which is an empty JS file used
-to make the above shimming work.
+## Requiring `gmaps` module <a name="requiring-gmaps-module"></a>
 
 After the shim is in place, the `gmaps` module is required as:
 
