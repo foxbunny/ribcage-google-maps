@@ -11,8 +11,10 @@ The library is still work in progress, so please don't expect miracles.
 
 ## Requirements
 
-This library depends on Ribcage and require-async module (if used with
-RequireJS). It, naturally, also requires the Google Maps API v3 library. 
+This library depends on Ribcage and
+[require-async](https://github.com/millermedeiros/requirejs-plugins) module (if
+used with RequireJS). Naturally, it requires the Google Maps API v3
+library. It also requires [DaHelpers](https://github.com/foxbunny/dahelpers).
 
 ## Installation
 
