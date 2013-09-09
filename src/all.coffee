@@ -38,11 +38,11 @@ define () ->
 
   # ## Models
   #
-  #  + [LatLongModel](doc/models/latlong.mkd) - Base model for models that
+  #  + [LatLongModel](models/latlong.mkd) - Base model for models that
   #    prepresents coordinates.
-  #  + [MapDataModel](doc/models/map_data.mkd) - Handles basic map data
+  #  + [MapDataModel](models/map_data.mkd) - Handles basic map data
   #    (position, heading, pov).
-  #  + [MarkerModel](doc/models/marker.mkd) - Represents the data for a single
+  #  + [MarkerModel](models/marker.mkd) - Represents the data for a single
   #    marker and associated info window.
   #
   models:
@@ -59,7 +59,7 @@ define () ->
 
   # ## Collections
   #
-  #  + [MarkersCollection](doc/collections/markers.mkd) - Represents a
+  #  + [MarkersCollection](collections/markers.mkd) - Represents a
   #    collection of markers.
   #
   collections:
@@ -71,11 +71,11 @@ define () ->
 
   # ## Views
   #
-  #  + [MapView](doc/views/map.mkd) - The main map view: handles the rendering
+  #  + [MapView](views/map.mkd) - The main map view: handles the rendering
   #    and presentation of the map.
-  #  + [MarkerView](doc/views/marker) - Handles the rendering and presentation
+  #  + [MarkerView](views/marker) - Handles the rendering and presentation
   #    of a single map marker and its info window.
-  #  + [MarkersView](doc/views/markers) - Handles the rendering and
+  #  + [MarkersView](views/markers) - Handles the rendering and
   #    presentation of a collection of markers with related views.
   #
   views:
