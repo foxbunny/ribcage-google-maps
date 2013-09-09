@@ -259,7 +259,6 @@ define(function(require) {
       var cfg;
       this.$el.html((typeof this.template === 'function' ? this.template() : this.template));
       cfg = this.getMapOpts(this.mapExtraConfigs, this.model);
-      console.log(cfg);
       return this.map = new maps.Map(this.getMapContainer(), cfg);
     }
   };
