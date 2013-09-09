@@ -86,7 +86,7 @@ define(function(require) {
         map: this.map,
         position: this.model.coords,
         title: this.model.title,
-        animation: this.getMarkerAnimation(this.markerAimation),
+        animation: this.getMarkerAnim(this.markerAimation),
         flat: !this.markerShadow,
         clickable: this.markerClickable,
         draggable: this.markerDraggable,

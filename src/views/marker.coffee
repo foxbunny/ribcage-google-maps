@@ -197,7 +197,7 @@ define (require) ->
         map: @map
         position: @model.coords
         title: @model.title
-        animation: @getMarkerAnimation @markerAimation
+        animation: @getMarkerAnim @markerAimation
         flat: not @markerShadow
         clickable: @markerClickable
         draggable: @markerDraggable
