@@ -47,36 +47,52 @@ define (require) ->
       lat: 0
       long: 0
 
-  # ### `#lat`
-  #
-  # This is an accessor for the `lat` attribute. The setter will convert any
-  # value to a float. The value will be `NaN` if it cannot be parsed by
-  # `parseFloat`.
-  #
-  Object.defineProperty latLongModelMixin, 'lat',
-    get: () -> @get 'lat'
-    set: (v) -> @set lat: parseFloat v
+    # ### `#lat([v])`
+    #
+    # This is an accessor for the `lat` attribute. The setter will convert any
+    # value to a float. The value will be `NaN` if it cannot be parsed by
+    # `parseFloat`.
+    #
+    # When called without arguments it returns the current value. Otherwise
+    # sets the value to `v`.
+    #
+    lat: (v) ->
+      if not v?
+        @get 'lat'
+      else
+        @set lat: parseFloat v
 
-  # ### `#long`
-  #
-  # This is an accessor for the `long` attribute. The setting will convert any
-  # value to float. The value will be `NaN` if it cannot be parsed by
-  # `parseFloat`.
-  #
-  Object.defineProperty latLongModelMixin, 'long',
-    get: () -> @get 'long'
-    set: (v) -> @set long: parseFloat v
+    # ### `#long([v])`
+    #
+    # This is an accessor for the `long` attribute. The setting will convert any
+    # value to float. The value will be `NaN` if it cannot be parsed by
+    # `parseFloat`.
+    #
+    # Returns current value when called without arguments, otherwise sets value
+    # to `v`.
+    #
+    long: (v) ->
+      if not v?
+        @get 'long'
+      else
+        @set long: parseFloat v
 
-  # ### `#coords`
-  #
-  # This is a shortcut for getting a `google.maps.LatLng` object based on the
-  # `lat` and `long` attributes. When setting a new value using this accessor,
-  # you must pass it an array of two float values that represent the lattitude
-  # and longitude.
-  #
-  Object.defineProperty latLongModelMixin, 'coords',
-    get: () -> new LatLng @lat, @long, false
-    set: (v) -> [@lat, @long] = v
+    # ### `#coords([lat, long])`
+    #
+    # This is a shortcut for getting a `google.maps.LatLng` object based on the
+    # `lat` and `long` attributes. When setting a new value using this accessor,
+    # you must pass it an array of two float values that represent the lattitude
+    # and longitude.
+    #
+    # Returns `google.maps.LatLng` instance if called without argumetns,
+    # otherwise sets latitude and longitude when passed the arguments.
+    #
+    coords: (lat, long) ->
+      if not lat? or not long?
+        new LatLng @lat(), @long(), false
+      else
+        @lat(lat)
+        @long(long)
 
   LatLongModel = BaseModel.extend latLongModelMixin
 

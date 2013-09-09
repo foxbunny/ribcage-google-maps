@@ -39,36 +39,34 @@ define(function(require) {
     defaults: {
       lat: 0,
       long: 0
+    },
+    lat: function(v) {
+      if (v == null) {
+        return this.get('lat');
+      } else {
+        return this.set({
+          lat: parseFloat(v)
+        });
+      }
+    },
+    long: function(v) {
+      if (v == null) {
+        return this.get('long');
+      } else {
+        return this.set({
+          long: parseFloat(v)
+        });
+      }
+    },
+    coords: function(lat, long) {
+      if ((lat == null) || (long == null)) {
+        return new LatLng(this.lat(), this.long(), false);
+      } else {
+        this.lat(lat);
+        return this.long(long);
+      }
     }
   };
-  Object.defineProperty(latLongModelMixin, 'lat', {
-    get: function() {
-      return this.get('lat');
-    },
-    set: function(v) {
-      return this.set({
-        lat: parseFloat(v)
-      });
-    }
-  });
-  Object.defineProperty(latLongModelMixin, 'long', {
-    get: function() {
-      return this.get('long');
-    },
-    set: function(v) {
-      return this.set({
-        long: parseFloat(v)
-      });
-    }
-  });
-  Object.defineProperty(latLongModelMixin, 'coords', {
-    get: function() {
-      return new LatLng(this.lat, this.long, false);
-    },
-    set: function(v) {
-      return this.lat = v[0], this.long = v[1], v;
-    }
-  });
   LatLongModel = BaseModel.extend(latLongModelMixin);
   return {
     mixin: latLongModelMixin,

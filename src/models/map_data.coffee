@@ -49,25 +49,35 @@ define (require) ->
       pitch: 0
     , latLongModel.mixin.defaults
 
-  # ### `#heading`
-  #
-  # This is an accessor for the `heading` attribute. The setting will convert
-  # any value to float. The value will be `NaN` if it cannot be parsed by
-  # `parseFloat`.
-  #
-  Object.defineProperty mapDataModelMixin, 'heading',
-    get: () -> @get 'heading'
-    set: (v) -> @set heading: parseFloat v
+    # ### `#heading(v)`
+    #
+    # This is an accessor for the `heading` attribute. The setting will convert
+    # any value to float. The value will be `NaN` if it cannot be parsed by
+    # `parseFloat`.
+    #
+    # Returns current value if passed no arguments, otherwise sets the value to
+    # `v`.
+    #
+    heading: (v) ->
+      if not v?
+        @get 'heading'
+      else
+        @set heading: parseFloat v
 
-  # ### `#pitch`
-  #
-  # This is an accessor for the `pitch` attribute. The setting will convert any
-  # value to float. The value will be `NaN` if it cannot be parsed by
-  # `parseFloat`.
-  #
-  Object.defineProperty mapDataModelMixin, 'pitch',
-    get: () -> @get 'pitch'
-    set: (v) -> @set pitch: parseFloat v
+    # ### `#pitch(v)`
+    #
+    # This is an accessor for the `pitch` attribute. The setting will convert any
+    # value to float. The value will be `NaN` if it cannot be parsed by
+    # `parseFloat`.
+    #
+    # Returns current value if given no arguments, otherwise sets the value to
+    # `v`.
+    #
+    pitch: (v) ->
+      if not v?
+        @get 'pitch'
+      else
+        @set pitch: parseFloat v
 
   MapDataModel = latLongModel.Model.extend mapDataModelMixin
 

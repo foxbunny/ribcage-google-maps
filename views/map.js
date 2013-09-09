@@ -36,9 +36,9 @@ define = (function(root) {
 })(this);
 
 define(function(require) {
-  var $, BaseView, MapView, mapViewMixin, maps, _;
+  var BaseView, MapView, dh, mapViewMixin, maps, _;
   _ = require('underscore');
-  $ = require('jquery');
+  dh = require('dahelpers');
   BaseView = require('ribcage/views/base').View;
   maps = require('../gmaps');
   mapViewMixin = {
@@ -80,17 +80,18 @@ define(function(require) {
     streetViewZoomControl: null,
     streetViewZoomControlStyle: null,
     getCtrlPos: function(v) {
-      v = v.toUpperCase();
-      return maps.ControlPosition[v];
+      if ((v == null) || (v === true || v === false)) {
+        return void 0;
+      }
+      return maps.ControlPosition[v.toUpperCase()];
     },
     getMapType: function(v) {
-      v = v.toUpperCase();
-      return maps.MapTypeId[v];
+      return v || void 0;
     },
     getMapTypes: function(a) {
       var v, _i, _len, _results;
-      if (!a) {
-        return null;
+      if ((a == null) || !a.length) {
+        return void 0;
       }
       _results = [];
       for (_i = 0, _len = a.length; _i < _len; _i++) {
@@ -101,18 +102,18 @@ define(function(require) {
     },
     getMapTypeCtrlStyle: function(v) {
       if (v === true || v === false) {
-        return null;
+        return void 0;
       }
-      v = v === null ? 'DEFAULT' : v.toUpperCase();
+      v = v == null ? 'DEFAULT' : v.toUpperCase();
       return maps.MapTypeControlStyle[v];
     },
     getZoomCtrlStyle: function(v) {
-      v = v === null ? 'DEFAULT' : v.toUpperCase();
+      v = v == null ? 'DEFAULT' : v.toUpperCase();
       return maps.ZoomControlStyle[v];
     },
     getOverviewOpen: function(v) {
-      if (v === false) {
-        return null;
+      if (v === false || (v == null)) {
+        return void 0;
       }
       if (v === 'open') {
         return true;
@@ -143,16 +144,17 @@ define(function(require) {
     getStreetViewContainer: function() {
       var svContainer;
       if (this.streetViewContainer == null) {
-        return null;
+        return void 0;
       }
       svContainer = this.$(this.streetViewContainer);
       if (!svContainer.length) {
-        return null;
+        return void 0;
       }
       return svContainer[0];
     },
     getStreetView: function(cfg) {
-      return maps.StreetViewPanorama(this.getStreetViewContainer(), {
+      var svCfg, svContainer;
+      svCfg = {
         addressControl: !!cfg.streetViewAddressControl,
         addressControlOptions: {
           position: this.getCtrlPos(cfg.streetViewAddressControl)
@@ -167,6 +169,8 @@ define(function(require) {
         panControlOptions: {
           position: this.getCtrlPos(cfg.streetViewPanControl)
         },
+        position: cfg.streetViewData.position,
+        pov: cfg.streetViewData.pov,
         scrollWheel: cfg.streetViewWheel,
         visible: cfg.streetView,
         zoomControl: !!cfg.streetViewZoomControl,
@@ -174,20 +178,37 @@ define(function(require) {
           position: this.getCtrlPos(cfg.streetViewZoomControl),
           style: this.getZoomCtrlStyle(cfg.streetViewZoomControlStyle)
         }
-      });
+      };
+      svContainer = this.getStreetViewContainer();
+      return new maps.StreetViewPanorama(svContainer, svCfg);
     },
-    getMapOpts: function(cfg) {
-      var o, opts, _fn, _i, _len, _ref;
-      cfg = $.extend(true, {}, cfg);
+    getMapOpts: function(cfg, data) {
+      var o, opts, _fn, _i, _len, _ref,
+        _this = this;
+      if (cfg == null) {
+        cfg = {};
+      }
+      cfg = dh.clone(cfg);
       _ref = ['mapType', 'zoom', 'minZoom', 'maxZoom', 'defaultUI', 'dblClickZoom', 'draggable', 'dragHoverCursor', 'dragMoveCursor', 'shortcuts', 'wheel', 'mapMaker', 'mapTypeControl', 'mapControlStyle', 'mapTypes', 'panControl', 'rotateControl', 'scaleControl', 'zoomControl', 'zoomControlStyle', 'overview', 'streetView', 'streetViewControl', 'streetViewDefaultUI', 'streetViewWheel', 'streetViewAddressControl', 'streetViewClickToGo', 'streetViewDblClickZoom', 'streetViewCloseButton', 'streetViewImageDates', 'streetViewLinks', 'streetViewPanControl', 'streetViewZoomControl', 'streetViewZoomControlStyle'];
       _fn = function(o) {
-        return cfg[o] || (cfg[o] = this[o]);
+        if (cfg[o] == null) {
+          return cfg[o] = _this[o];
+        }
       };
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         o = _ref[_i];
         _fn(o);
       }
+      cfg.streetViewData = {
+        pov: {
+          heading: data.heading(),
+          pitch: data.pitch()
+        },
+        position: data.coords()
+      };
       return opts = {
+        center: data.coords(),
+        heading: data.heading(),
         disableDefaultUI: !cfg.defaultUI,
         disableDoubleClickZoom: !cfg.dblClickZoom,
         draggable: cfg.draggable,
@@ -221,27 +242,25 @@ define(function(require) {
         scaleControlOptions: {
           position: this.getCtrlPos(cfg.scaleControl)
         },
+        streetViewPanorama: this.getStreetView(cfg),
+        streetViewControl: !!cfg.streetViewControl,
+        streetViewControlOptions: {
+          position: this.getCtrlPos(cfg.streetViewControl)
+        },
         scrollwheel: cfg.wheel,
-        zoom: cfg.zoom,
-        streetViewPanorama: this.getStreetView(cfg)
+        zoom: cfg.zoom
       };
     },
-    initialize: function(settings) {
-      this.cfg = this.getmapOpts(settings);
+    initialize: function(_arg) {
+      this.mapExtraConfigs = _arg.mapExtraConfigs;
       return this.model.on('change', this.render, this);
     },
     render: function() {
-      var cfg, data;
+      var cfg;
       this.$el.html((typeof this.template === 'function' ? this.template() : this.template));
-      cfg = $.extend(true, {}, this.cfg);
-      data = this.model.toJSON();
-      cfg.center = cfg.streetView.position = data.coords;
-      cfg.heading = data.heading;
-      cfg.streetView.pov = {
-        heading: data.heading,
-        pitch: data.pitch
-      };
-      return this.map = maps.Map(this.getMapContainer(), cfg);
+      cfg = this.getMapOpts(this.mapExtraConfigs, this.model);
+      console.log(cfg);
+      return this.map = new maps.Map(this.getMapContainer(), cfg);
     }
   };
   MapView = BaseView.extend(mapViewMixin);

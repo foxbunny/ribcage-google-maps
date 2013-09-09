@@ -37,7 +37,7 @@ define (require) ->
   # `ribcage.views.BaseView`.
   #
   _ = require 'underscore'
-  $ = require 'jquery'
+  dh = require 'dahelpers'
   {View: BaseView} = require 'ribcage/views/base'
   maps = require '../gmaps'
 
@@ -485,22 +485,21 @@ define (require) ->
     # Converts the `MapView` control position string to Maps API version.
     #
     getCtrlPos: (v) ->
-      v = v.toUpperCase()
-      maps.ControlPosition[v]
+      return undefined if not v? or v in [true, false]
+      maps.ControlPosition[v.toUpperCase()]
 
     # ### `#getMapType(v)`
     #
     # Converts the `MapView` map type to Maps API version.
     #
     getMapType: (v) ->
-      v = v.toUpperCase()
-      maps.MapTypeId[v]
+      v or undefined
 
     # ### `getMapTypes(a)`
     #
     # Convert an array of `MapView` map types to Maps API version.
     getMapTypes: (a) ->
-      return null if not a
+      return undefined if not a? or not a.length
       (@getMapTypes(v) for v in a)
 
     # ### `#getMapTypeCtrlStyle(v)`
@@ -508,8 +507,8 @@ define (require) ->
     # Converts the `MapView` map type control style to Maps API version.
     #
     getMapTypeCtrlStyle: (v) ->
-      return null if v in [true, false]
-      v = if v is null then 'DEFAULT' else v.toUpperCase()
+      return undefined if v in [true, false]
+      v = if not v? then 'DEFAULT' else v.toUpperCase()
       maps.MapTypeControlStyle[v]
 
     # ### `#getZoomCtrlStyle(v)`
@@ -517,7 +516,7 @@ define (require) ->
     # Converts the `MapView` zoom control style to Maps API version.
     #
     getZoomCtrlStyle: (v) ->
-      v = if v is null then 'DEFAULT' else v.toUpperCase()
+      v = if not v? then 'DEFAULT' else v.toUpperCase()
       maps.ZoomControlStyle[v]
 
     # ### `getOverviewOpen(v)`
@@ -526,7 +525,7 @@ define (require) ->
     # `false`, the `null` is returned instead.
     #
     getOverviewOpen: (v) ->
-      return null if v is false
+      return undefined if v is false or not v?
       if v is 'open' then true else false
 
     # ### `#getCoords(lat, long)`
@@ -560,9 +559,9 @@ define (require) ->
     # Return the node to use a the Street View container.
     #
     getStreetViewContainer: () ->
-      return null if not @streetViewContainer?
+      return undefined if not @streetViewContainer?
       svContainer = @$ @streetViewContainer
-      return null if not svContainer.length
+      return undefined if not svContainer.length
       svContainer[0]
 
     # ### `#getStreetView(cfg)`
@@ -570,7 +569,7 @@ define (require) ->
     # Returns the `maps.StreetViewPanorama` instance.
     #
     getStreetView: (cfg) ->
-      maps.StreetViewPanorama @getStreetViewContainer(),
+      svCfg =
         addressControl: !!cfg.streetViewAddressControl
         addressControlOptions:
           position: @getCtrlPos cfg.streetViewAddressControl
@@ -583,6 +582,8 @@ define (require) ->
         panControl: !!cfg.streetViewPanControl
         panControlOptions:
           position: @getCtrlPos cfg.streetViewPanControl
+        position: cfg.streetViewData.position
+        pov: cfg.streetViewData.pov
         scrollWheel: cfg.streetViewWheel
         visible: cfg.streetView
         zoomControl: !!cfg.streetViewZoomControl
@@ -590,18 +591,23 @@ define (require) ->
           position: @getCtrlPos cfg.streetViewZoomControl
           style: @getZoomCtrlStyle cfg.streetViewZoomControlStyle
 
-    # ### `#getMapOpts(cfg)`
+      svContainer = @getStreetViewContainer()
+
+      new maps.StreetViewPanorama svContainer, svCfg
+
+    # ### `#getMapOpts([cfg,] data)`
     #
     # Compiles the options object for use with the Maps API `Map` constructor.
     # The `cfg` argument should contain any overrides for the options defined
-    # in the view constructor.
+    # in the view constructor. It defaults to `{}` if not supplied. The `data`
+    # argument should contain the model.
     #
-    getMapOpts: (cfg) ->
-      cfg = $.extend true, {}, cfg  # Create a shallow clone
+    getMapOpts: (cfg={}, data) ->
+      cfg = dh.clone cfg
 
       # Set the defaults from the view constructor
-      ((o) ->
-        cfg[o] or= this[o]
+      ((o) =>
+        cfg[o] = this[o] if not cfg[o]?
       ) o for o in [
         'mapType'
         'zoom'
@@ -639,7 +645,17 @@ define (require) ->
         'streetViewZoomControlStyle'
       ]
 
+      # Set data contained in the model
+      cfg.streetViewData =
+        pov:
+          heading: data.heading()
+          pitch: data.pitch()
+        position: data.coords()
+
+      # Convert to Google Maps API format
       opts =
+        center: data.coords()
+        heading: data.heading()
         disableDefaultUI: not cfg.defaultUI
         disableDoubleClickZoom: not cfg.dblClickZoom
         draggable: cfg.draggable
@@ -668,9 +684,12 @@ define (require) ->
         scaleControl: !!cfg.rotateControl
         scaleControlOptions:
           position: @getCtrlPos cfg.scaleControl
+        streetViewPanorama: @getStreetView cfg
+        streetViewControl: !!cfg.streetViewControl
+        streetViewControlOptions:
+          position: @getCtrlPos cfg.streetViewControl
         scrollwheel: cfg.wheel
         zoom: cfg.zoom
-        streetViewPanorama: @getStreetView cfg
 
     # ### `#initialize(settings)` ->
     #
@@ -684,8 +703,7 @@ define (require) ->
     # The view will also bind its `#render()` method to model's change event so
     # the map will update automatically whenever model data changes.
     #
-    initialize: (settings) ->
-      @cfg = @getmapOpts(settings)
+    initialize: ({@mapExtraConfigs}) ->
       @model.on 'change', @render, this
 
     # ### `#render()`
@@ -696,17 +714,9 @@ define (require) ->
       @$el.html (
         if typeof @template is 'function' then @template() else @template
       )
-
-      cfg = $.extend true, {}, @cfg
-      data = @model.toJSON()
-
-      cfg.center = cfg.streetView.position = data.coords
-      cfg.heading = data.heading
-      cfg.streetView.pov =
-        heading: data.heading
-        pitch: data.pitch
-
-      @map = maps.Map @getMapContainer(), cfg
+      cfg = @getMapOpts @mapExtraConfigs, @model
+      console.log cfg
+      @map = new maps.Map @getMapContainer(), cfg
 
   MapView = BaseView.extend mapViewMixin
 

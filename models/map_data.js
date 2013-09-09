@@ -39,28 +39,26 @@ define(function(require) {
     defaults: dh.extend({
       heading: 0,
       pitch: 0
-    }, latLongModel.mixin.defaults)
+    }, latLongModel.mixin.defaults),
+    heading: function(v) {
+      if (v == null) {
+        return this.get('heading');
+      } else {
+        return this.set({
+          heading: parseFloat(v)
+        });
+      }
+    },
+    pitch: function(v) {
+      if (v == null) {
+        return this.get('pitch');
+      } else {
+        return this.set({
+          pitch: parseFloat(v)
+        });
+      }
+    }
   };
-  Object.defineProperty(mapDataModelMixin, 'heading', {
-    get: function() {
-      return this.get('heading');
-    },
-    set: function(v) {
-      return this.set({
-        heading: parseFloat(v)
-      });
-    }
-  });
-  Object.defineProperty(mapDataModelMixin, 'pitch', {
-    get: function() {
-      return this.get('pitch');
-    },
-    set: function(v) {
-      return this.set({
-        pitch: parseFloat(v)
-      });
-    }
-  });
   MapDataModel = latLongModel.Model.extend(mapDataModelMixin);
   return {
     mixin: mapDataModelMixin,
