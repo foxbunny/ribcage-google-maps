@@ -33,7 +33,7 @@ define = (function(root) {
 
 define(function(require) {
   var BaseView, MarkerView, maps, markerViewMixin;
-  BaseView = require('ribcage/view/base').View;
+  BaseView = require('ribcage/views/base').View;
   maps = require('../gmaps');
   markerViewMixin = {
     initialize: function(_arg) {

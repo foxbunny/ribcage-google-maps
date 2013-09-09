@@ -31,7 +31,7 @@ define (require) ->
   # This module depends on Google Maps JavaScript API v3 library, Underscore,
   # and `ribcage.views.BaseView`.
   #
-  {View: BaseView} = require 'ribcage/view/base'
+  {View: BaseView} = require 'ribcage/views/base'
   maps = require '../gmaps'
 
   # ::TOC::
