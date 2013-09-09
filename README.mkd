@@ -56,5 +56,6 @@ centered on San Francisco.
 ## API documentation
 
 Complete API documentation is located in the [`doc` directory](doc). These
-files are Markdown files generated from the source code.
+files are Markdown files generated from the source code. Documentation for
+[main module](doc/all.mkd) contains links to individual modules.
 
