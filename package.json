@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "volo": "*",
-    "coffee-script": "1.6.3",
+    "coffee-script": "1.6.3"
   },
   "main": "main.js",
   "volo": {
