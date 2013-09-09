@@ -132,7 +132,7 @@ define (require) ->
     # ### `#infoWindowAutoPan`
     #
     # Whether info window will automatically pan whe map is panned. Default is
-    # `true`.
+    # `true`We need models attribute not the whole collection.
     #
     infoWindowAutoPan: true
 
@@ -197,7 +197,7 @@ define (require) ->
         map: @map
         position: @model.coords
         title: @model.title
-        animation: @getMaerkerAnimation @markerAimation
+        animation: @getMarkerAnimation @markerAimation
         flat: not @markerShadow
         clickable: @markerClickable
         draggable: @markerDraggable
