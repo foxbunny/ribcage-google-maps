@@ -1,0 +1,8 @@
+# Ribcage-Google-Maps <a name="ribcage-google-maps"></a>
+
+This is the main Ribcage-Google-Maps module. It represents a one-stop shop for
+all other modules and a namespace creator when not used with an AMD loader such
+as RequireJS.
+
+You should generally require indivudal modules instead of this one. However, if
+you are not using an AMD module loader, you _must_ load this module first.

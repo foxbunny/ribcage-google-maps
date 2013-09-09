@@ -1,0 +1,27 @@
+# Robcage-Google-Maps
+
+This library adds support for [Google Maps JavaScript API
+v3](https://developers.google.com/maps/documentation/javascript/) to
+[Ribcage](https://github.com/foxbunny/ribcage) apps.
+
+It constists of models, collections, and views that help make working with the
+Maps API more like working with Backbone applications.
+
+The library is still work in progress, so please don't expect miracles.
+
+## Requirements
+
+This library depends on Ribcage and require-async module (if used with
+RequireJS). It, naturally, also requires the Google Maps API v3 library. When
+using as AMD modules, you will need to adjust your RequireJS and build
+configuration. Please see the section on [shimming](#shimming-the-gmaps-module)
+for more details.
+
+## Installation
+
+TODO
+
+## Shimming the gmaps module
+
+Please see API documentation in [`docs/lib/gmaps.mkd`](doc/lib/gmaps.mkd).
+

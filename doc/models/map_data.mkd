@@ -1,0 +1,32 @@
+# Map data model <a name="map-data-model"></a>
+
+This is a model that contains map data compatible with `MapView`.
+
+This module is in UMD format. It will create
+`ribcageGoogleMaps.models.mapDataModel`,
+`ribcageGoogleMaps.models.MapDataModel`, and
+`ribcageGoogleMaps.modelMixins.MapDataModel` globals if not used with an AMD
+loader such as RequireJS.
+
+This module depends on DaHelpers and `ribcageGoogleMaps.latLongModel.
+
+ + [`mapDataModelMixin`](#mapdatamodelmixin)
+   - [`#heading`](#heading)
+   - [`#pitch`](#pitch)
+
+
+## `mapDataModelMixin` <a name="mapdatamodelmixin"></a>
+
+This mixin implements the API of the `MapDataModel`.
+
+It extends the `LatLongModel` to add heading and pitch information.
+
+### `#heading` <a name="heading"></a>
+
+This is an accessor for the `heading` attribute. The setting will convert any
+value to float. The value will be `NaN` if it cannot be parsed by `parseFloat`.
+
+### `#pitch` <a name="pitch"></a>
+
+This is an accessor for the `pitch` attribute. The setting will convert any
+value to float. The value will be `NaN` if it cannot be parsed by `parseFloat`.

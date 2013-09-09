@@ -1,0 +1,51 @@
+# MarkersView <a name="markersview"></a>
+
+This is a superview that renders multiple marker views for a collection of
+markers.
+
+This module is in UMD format. It will create
+`ribcageGoogleMaps.views.markersView`, `ribcageGoogleMaps.views.MarkersView`,
+and `ribcageGoogleMaps.viewMixins.MarkerView` globals if not used with an AMD
+loader such as RequireJS.
+
+This module depends on `ribcage.views.BaseView` and
+`ribcageGoogleMaps.views.MarkerView`.
+
+## `markersViewMixin` <a name="markersviewmixin"></a>
+
+This mixin implements the API for the `MarkersView`.
+
+The subview used for each marker can be specified or dinamically calculated. It
+defaults to the default `MarkerView`.
+
+### `#initialize(settings)` <a name="initialize-settings"></a>
+
+The settings should contain a `map` key which points to a valid
+`google.maps.Map` object.
+
+During initalization, the `change`, `add`, and `remove` events triggered on the
+collection are bound to `#render()` method, which causes the view to renrender
+all markers.
+
+### `markerView` <a name="markerview"></a>
+
+View used for rendering each marker. Default is `MarkerView`.
+
+### `#getMarkerView(attributes)` <a name="getmarkerview-attributes"></a>
+
+Returns a view to be used for rendering markers. It is passed an `attributes`
+object which contains the model's attributes.
+
+Default implementation returns the `#markerView` attribute.
+
+### `#childViews` <a name="childviews"></a>
+
+This property houses all child views.
+
+### `#render()` <a name="render"></a>
+
+Renders all marker views.
+
+### `#remove()` <a name="remove"></a>
+
+Removes all child views and their markers.

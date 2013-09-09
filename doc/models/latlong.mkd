@@ -1,0 +1,39 @@
+# Lat-long model <a name="lat-long-model"></a>
+
+This model stores latitude and longitude information and provides a coords
+accesor for manipulating them.
+
+This module is in UMD format. It will create
+`ribcageGoogleMaps.models.latLong`, `ribcageGoogleMaps.models.LatLong`, and
+`ribcageGoogleMaps.modelMixins.LatLong` globals if not used with an AMD loader
+such as RequireJS.
+
+This module depends on Google Maps API v3 library and
+`ribcage.models.BaseModel`.
+
+ + [`latLongModelMixin`](#latlongmodelmixin)
+   - [`#lat`](#lat)
+   - [`#long`](#long)
+   - [`#coords`](#coords)
+
+
+## `latLongModelMixin` <a name="latlongmodelmixin"></a>
+
+This mixin implements the API of the `LatLongModel`.
+
+### `#lat` <a name="lat"></a>
+
+This is an accessor for the `lat` attribute. The setter will convert any value
+to a float. The value will be `NaN` if it cannot be parsed by `parseFloat`.
+
+### `#long` <a name="long"></a>
+
+This is an accessor for the `long` attribute. The setting will convert any
+value to float. The value will be `NaN` if it cannot be parsed by `parseFloat`.
+
+### `#coords` <a name="coords"></a>
+
+This is a shortcut for getting a `google.maps.LatLng` object based on the `lat`
+and `long` attributes. When setting a new value using this accessor, you must
+pass it an array of two float values that represent the lattitude and
+longitude.

@@ -1,0 +1,500 @@
+# Map view <a name="map-view"></a>
+
+This module implements a model view that displays a map using Google Maps
+JavaScript API v3 and model data. It also updates the map based on model data
+when model data changes.
+
+This module is in UMD format. It will create a
+`ribcageGoogleMaps.views.mapView`, `ribcageGoogleMaps.views.MapView`, and
+`ribcageGoogleMaps.viewMixins.MapView` globals if not used with an AMD loader
+such as RequireJS.
+
+This module depends on Google Maps API v3 library, Underscore, jQuery, and
+`ribcage.views.BaseView`.
+
+ + [`mapViewMixin`](#mapviewmixin)
+   - [`#template`](#template)
+   - [`#mapContainer`](#mapcontainer)
+   - [`#mapType`](#maptype)
+   - [`#zoom`](#zoom)
+   - [`#minZoom`](#minzoom)
+   - [`#maxZoom`](#maxzoom)
+   - [`#defaultUI`](#defaultui)
+   - [`#dblClickZoom`](#dblclickzoom)
+   - [`#dragMoveCursor`](#dragmovecursor)
+   - [`shortcuts`](#shortcuts)
+   - [`wheel`](#wheel)
+   - [`mapMaker`](#mapmaker)
+   - [`#mapTypeControl`](#maptypecontrol)
+   - [`#mapControlStyle`](#mapcontrolstyle)
+   - [`#mapTypes`](#maptypes)
+   - [`#panControl`](#pancontrol)
+   - [`#rotateControl`](#rotatecontrol)
+   - [`#scaleControl`](#scalecontrol)
+   - [`#zoomControl`](#zoomcontrol)
+   - [`#zoomControlStyle`](#zoomcontrolstyle)
+   - [`overview`](#overview)
+   - [`streetView`](#streetview)
+   - [`#streetViewContainer`](#streetviewcontainer)
+   - [`#streetViewControl`](#streetviewcontrol)
+   - [`#streetViewDefaultUI`](#streetviewdefaultui)
+   - [`#streetViewWheel`](#streetviewwheel)
+   - [`#streetViewAddressControl`](#streetviewaddresscontrol)
+   - [`#streetViewClickToGo`](#streetviewclicktogo)
+   - [`#streetViewDblClickZoom`](#streetviewdblclickzoom)
+   - [`#streetViewCloseButton`](#streetviewclosebutton)
+   - [`#streetViewImageDates`](#streetviewimagedates)
+   - [`#streetViewLinks`](#streetviewlinks)
+   - [`#streetViewPanControl`](#streetviewpancontrol)
+   - [`#streetViewZoomControl`](#streetviewzoomcontrol)
+   - [`#streetViewZoomControlStyle`](#streetviewzoomcontrolstyle)
+   - [`#getCtrlPos(v)`](#getctrlpos-v)
+   - [`#getMapType(v)`](#getmaptype-v)
+   - [`getMapTypes(a)`](#getmaptypes-a)
+   - [`#getZoomCtrlStyle(v)`](#getzoomctrlstyle-v)
+   - [`getOverviewOpen(v)`](#getoverviewopen-v)
+   - [`#getCoords(lat, long)`](#getcoords-lat-long)
+   - [`#getMapContainer()`](#getmapcontainer)
+   - [`#getStreetViewContainer()`](#getstreetviewcontainer)
+   - [`#getStreetView(cfg)`](#getstreetview-cfg)
+   - [`#getMapOpts(cfg)`](#getmapopts-cfg)
+   - [`#render()`](#render)
+
+
+## `mapViewMixin` <a name="mapviewmixin"></a>
+
+This mixin implements the API for the `MapView`.
+
+The model passed to `MapView` should contain information about various
+coordinates. The properties on the view itself control the overall appearance
+of the map such as placement of controls, the type of map to display, and
+similar.
+
+### `#template` <a name="template"></a>
+
+Template to render before rendering the map. Overriding this can be useful if
+you want to render Street View and map in separate containers. Otherwise, the
+default is empty string.
+
+If this attribute is a function, it will be called without arguments and it
+will be expected to return the string to use as HTML.
+
+### `#mapContainer` <a name="mapcontainer"></a>
+
+jQuery selector for the map container. The view's `el` is used if `null`.
+Default is `null`.
+
+### `#mapType` <a name="maptype"></a>
+
+Sets the type of map to use. Can be any of the following values:
+
+ + 'hybrid'
+ + 'roadmap'
+ + 'sattelite'
+ + 'terrain'
+
+
+Default is 'roadmap'.
+
+### `#zoom` <a name="zoom"></a>
+
+Default zoom of the map. Default is 8.
+
+### `#minZoom` <a name="minzoom"></a>
+
+Minimum zoom level. Default is `null`.
+
+### `#maxZoom` <a name="maxzoom"></a>
+
+Maximum zoom level. Default is `null`.
+
+### `#defaultUI` <a name="defaultui"></a>
+
+Whether all of default map UI is enabled. Default is `true`.
+
+### `#dblClickZoom` <a name="dblclickzoom"></a>
+
+Whether double-click zoom is enabled. Default is `true`. ### `#draggable`
+
+Whether dragging is enabled. Default is `true`. ### `#dragHoverCursor`
+
+The URL of the cursor to show when cursor is over a draggable map. Default is
+`null` (default cursor).
+
+### `#dragMoveCursor` <a name="dragmovecursor"></a>
+
+The URL of the cursor to show map is being dragged. Default is `null` (default
+cursor).
+
+### `shortcuts` <a name="shortcuts"></a>
+
+Whether keyboard shortcuts are enabled. Default is `true`.
+
+### `wheel` <a name="wheel"></a>
+
+Whether scroll wheel zooming is enabled. Default is `true`.
+
+### `mapMaker` <a name="mapmaker"></a>
+
+Whether [Map Maker](http://www.google.com/mapmaker) tiles are used instead of
+normal map tiles. Default is `false`
+
+### `#mapTypeControl` <a name="maptypecontrol"></a>
+
+Position of the map type control. Any of the following values:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `true`.
+
+### `#mapControlStyle` <a name="mapcontrolstyle"></a>
+
+The style of the map type control. Can be any of the following:
+
+ + 'dropdown_menu'
+ + 'horizontal_bar'
+ + `null` (default style)
+
+
+Default is `null`.
+
+### `#mapTypes` <a name="maptypes"></a>
+
+The map types that are allowed. Should be an array that includes one or more of
+the following:
+
+ + 'hybrid'
+ + 'roadmap'
+ + 'sattelite'
+ + 'terrain'
+
+
+The the value is set to `null`, uses the defaults.
+
+Default is `null`.
+
+### `#panControl` <a name="pancontrol"></a>
+
+Position of the pan control. Any of the following values:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `true`.
+
+### `#rotateControl` <a name="rotatecontrol"></a>
+
+Position of the rotate control. Any of the following values:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `true`.
+
+### `#scaleControl` <a name="scalecontrol"></a>
+
+Position of the scale control. Any of the following values:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `true`.
+
+### `#zoomControl` <a name="zoomcontrol"></a>
+
+Position of the zoom control. Any of the following values:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `true`.
+
+### `#zoomControlStyle` <a name="zoomcontrolstyle"></a>
+
+Can be any of the following values:
+
+ + 'large'
+ + 'small'
+ + `null` (default style)
+
+
+Default is null.
+
+### `overview` <a name="overview"></a>
+
+The overview control options. Can be any of the following:
+
+ + 'open' (enabled and open by default)
+ + 'closed' (enabled and closed by default)
+ + false (disabled)
+
+
+Default is `false`
+
+### `streetView` <a name="streetview"></a>
+
+Whether Street View is visible by default or not. Default is `false`.
+
+### `#streetViewContainer` <a name="streetviewcontainer"></a>
+
+jQuery selector for the streetview container. The container must be inside the
+view's `el`. Default is null (use same element as map).
+
+### `#streetViewControl` <a name="streetviewcontrol"></a>
+
+Position of the Street View control (the pegman). Any of the following:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `true`.
+
+### `#streetViewDefaultUI` <a name="streetviewdefaultui"></a>
+
+Whether all of default UI is enabled. Default is `true`.
+
+### `#streetViewWheel` <a name="streetviewwheel"></a>
+
+Whether scroll wheel zooming is enabled in Street View. Default is `true`.
+
+### `#streetViewAddressControl` <a name="streetviewaddresscontrol"></a>
+
+Position of the address control in Street View. Any of the following:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `true`.
+
+### `#streetViewClickToGo` <a name="streetviewclicktogo"></a>
+
+Whether click-to-go behavior is enabled. Default is `true`.
+
+### `#streetViewDblClickZoom` <a name="streetviewdblclickzoom"></a>
+
+Whether double-click zoom is enabled. Default is `false`.
+
+### `#streetViewCloseButton` <a name="streetviewclosebutton"></a>
+
+Whether close button is enabled. Default is `false`.
+
+### `#streetViewImageDates` <a name="streetviewimagedates"></a>
+
+Whether image acquisition date control is enabled. Default is `false`.
+
+### `#streetViewLinks` <a name="streetviewlinks"></a>
+
+Whether links control is enabled. Default is `false`
+
+### `#streetViewPanControl` <a name="streetviewpancontrol"></a>
+
+Position of the pan control. Any of the following:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `false`.
+
+### `#streetViewZoomControl` <a name="streetviewzoomcontrol"></a>
+
+Position of the zoom control in Street View. Any of the following values:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `true`.
+
+### `#streetViewZoomControlStyle` <a name="streetviewzoomcontrolstyle"></a>
+
+Can be any of the following values:
+
+ + 'large'
+ + 'small'
+ + `null` (default style)
+
+
+Default is null.
+
+### `#getCtrlPos(v)` <a name="getctrlpos-v"></a>
+
+Converts the `MapView` control position string to Maps API version.
+
+### `#getMapType(v)` <a name="getmaptype-v"></a>
+
+Converts the `MapView` map type to Maps API version.
+
+### `getMapTypes(a)` <a name="getmaptypes-a"></a>
+
+Convert an array of `MapView` map types to Maps API version. ###
+`#getMapTypeCtrlStyle(v)`
+
+Converts the `MapView` map type control style to Maps API version.
+
+### `#getZoomCtrlStyle(v)` <a name="getzoomctrlstyle-v"></a>
+
+Converts the `MapView` zoom control style to Maps API version.
+
+### `getOverviewOpen(v)` <a name="getoverviewopen-v"></a>
+
+Returns a boolean that is used in `overviewMapControlOptions`. If `v` is
+`false`, the `null` is returned instead.
+
+### `#getCoords(lat, long)` <a name="getcoords-lat-long"></a>
+
+Converts the float `lat` and `long` to Maps API `LatLng` object.
+
+The `lat` and `long` can be strings and will be converted to floats using
+`parseFloat`. If The coordinates are not valid numbers, a coordinate for `(0,
+0)` will be returned instead.
+
+### `#getMapContainer()` <a name="getmapcontainer"></a>
+
+Return the node to use as map container.
+
+### `#getStreetViewContainer()` <a name="getstreetviewcontainer"></a>
+
+Return the node to use a the Street View container.
+
+### `#getStreetView(cfg)` <a name="getstreetview-cfg"></a>
+
+Returns the `maps.StreetViewPanorama` instance.
+
+### `#getMapOpts(cfg)` <a name="getmapopts-cfg"></a>
+
+Compiles the options object for use with the Maps API `Map` constructor. The
+`cfg` argument should contain any overrides for the options defined in the view
+constructor.
+
+Set the defaults from the view constructor ### `#initialize(settings)` ->
+
+The settings object may contain a `mapConfig` key that will be used to
+dynamically specify or override options set in the view constructor.
+
+The `mapExtraConfigs` key can be used to supply raw Google Maps API settings.
+These settings will override any settings that are specified in the view
+constructor or `mapConfig` keys.
+
+The view will also bind its `#render()` method to model's change event so the
+map will update automatically whenever model data changes.
+
+### `#render()` <a name="render"></a>
+
+Renders the map and stores the reference to rendered map as `this.map`.

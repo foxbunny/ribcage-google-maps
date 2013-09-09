@@ -1,0 +1,134 @@
+# Marker view <a name="marker-view"></a>
+
+This view provides means for display markers and associated info windows.
+
+This module is in UMD format. It will create
+`ribcageGoogleMaps.views.markerView`, `ribcageGoogleMaps.views.MarkerView`, and
+`ribcageGoogleMaps.viewMixins.MarkerView` globals if not used with and AMD
+loader such as RequireJS.
+
+This module depends on Google Maps JavaScript API v3 library, Underscore, and
+`ribcage.views.BaseView`.
+
+ + [`markerViewMixin`](#markerviewmixin)
+   - [`#initialize(settings)`](#initialize-settings)
+   - [`#markerShadow`](#markershadow)
+   - [`#markerAnimation`](#markeranimation)
+   - [`#markerClickable`](#markerclickable)
+   - [`#markerDraggable`](#markerdraggable)
+   - [`#markerIcon`](#markericon)
+   - [`markerShape`](#markershape)
+   - [`#markerVisible`](#markervisible)
+   - [`#infoTemplateSource`](#infotemplatesource)
+   - [`#infoTemplate(data)`](#infotemplate-data)
+   - [`#infoWindowAutoPan`](#infowindowautopan)
+   - [`#infoWindowOffset`](#infowindowoffset)
+   - [`createInfoWindow(data)`](#createinfowindow-data)
+   - [`#getMarkerAnim(v)`](#getmarkeranim-v)
+   - [`#onClick()`](#onclick)
+   - [`#render()`](#render)
+
+
+## `markerViewMixin` <a name="markerviewmixin"></a>
+
+This mixin implements the API for the `MapView`.
+
+It should be bound to a single model, and the rendering of the marker and
+associated info window will be taken care of by it.
+
+### `#initialize(settings)` <a name="initialize-settings"></a>
+
+The `settings` must contain a `map` key which should be a valid
+`google.maps.Map` object.
+
+During initialization, the `#render()` method is bound to model's change event
+and the view is rerendered each time the model is updated.
+
+### `#markerShadow` <a name="markershadow"></a>
+
+Whether marker has a shadow. Default is `false`.
+
+### `#markerAnimation` <a name="markeranimation"></a>
+
+The animation for the marker. Any of the following values:
+
+ + 'bounce'
+ + 'drop'
+ + `null` (do not use animation)
+
+
+Default is `null`.
+
+### `#markerClickable` <a name="markerclickable"></a>
+
+Whether marker is clickable. Default is `true`
+
+### `#markerDraggable` <a name="markerdraggable"></a>
+
+Whether marker is draggable. Default is `false`
+
+### `#markerIcon` <a name="markericon"></a>
+
+Sets the marker icon. Can be the URL of the icon, or `google.maps.Icon` or
+`google.maps.Symbol` object. Default is `null` (use default icon).
+
+### `markerShape` <a name="markershape"></a>
+
+Image map definiton of the the marker. Must be compatible with
+`google.maps.MarkerShape`
+s://developers.google.com/maps/documentation/javascript/reference#MarkerShape).
+
+Default is `null`.
+
+### `#markerVisible` <a name="markervisible"></a>
+
+Whether marker is visible by default. Default is `true`.
+
+If you choose to not show the marker by default, you can call the
+[`#show()`](#show) method to show it.
+
+### `#infoTemplateSource` <a name="infotemplatesource"></a>
+
+This attribute holds the template source for the info window. It is rendered by
+Underscore by default.
+
+Default value is '' (empty string).
+
+### `#infoTemplate(data)` <a name="infotemplate-data"></a>
+
+Renders the `#infoTemplateSource` using Underscore.
+
+### `#infoWindowAutoPan` <a name="infowindowautopan"></a>
+
+Whether info window will automatically pan whe map is panned. Default is
+`true`.
+
+### `#infoWindowOffset` <a name="infowindowoffset"></a>
+
+The offset in pixels from the position at which it is rendered. Default is 0.
+
+### `createInfoWindow(data)` <a name="createinfowindow-data"></a>
+
+Create a `google.maps.InfoWindow` object from given context data.
+
+### `#getMarkerAnim(v)` <a name="getmarkeranim-v"></a>
+
+Returns Maps API compatible animation value.
+
+### `#onClick()` <a name="onclick"></a>
+
+Click event handler for the marker associated with this view.
+
+Default implementation opens an info window if one is assocated with the
+marker.
+
+### `#render()` <a name="render"></a>
+
+This method renders the marker into the associated map, and optionally creates
+an info window if mode contains data for it.
+
+Note that new instances are not created if they already exist. In such a case,
+existing instaces are updated. This means that calling `#render()` multiple
+times will not result in new markers except for the very first time.
+
+You generally shouldn't overload this method.

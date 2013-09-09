@@ -1,0 +1,40 @@
+{
+  "name" : "ribcage-google-maps",
+  "description" : "Give your Backbone app some Ribcage with Models, Views and Validation.",
+  "homepage" : "https://github.com/foxbunny/ribcage-google-maps/",
+  "keywords" : ["model", "collection", "soap", "ribcage", "backbone", "client", "browser"],
+  "author" : "Branko Vukelic <branko@brankovukelic.com>",
+  "bugs": {
+    "url": "https://github.com/foxbunny/ribcage-google-maps/issues",
+    "email": "branko@brankovukelic.com"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/foxbunny/ribcage-google-maps/blob/master/LICENSE"
+  },
+  "dependencies" : {
+    "dahelpers": ">=0.2.1"
+  },
+  "devDependencies": {
+    "volo": "*",
+    "coffee-script": "1.6.3",
+  },
+  "main": "main.js",
+  "volo": {
+    "dependencies": {
+      "ribcage": "foxbunny/ribcage",
+      "dahelpers": "foxbunny/dahelpers/>0.2.1"
+    },
+    "ignore": [
+      "package.json",
+      ".gitignore",
+      "CHANGES.mkd",
+      "README.mkd",
+      "LICENSE",
+      "volofile",
+      "tools",
+      "src"
+    ]
+  },
+  "version" : "0.0.1"
+}
