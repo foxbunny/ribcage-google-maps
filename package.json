@@ -33,6 +33,7 @@
       "LICENSE",
       "volofile",
       "tools",
+      "doc",
       "src"
     ]
   },
