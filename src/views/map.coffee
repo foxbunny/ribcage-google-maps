@@ -711,9 +711,11 @@ define (require) ->
     # Renders the map and stores the reference to rendered map as `this.map`.
     #
     render: () ->
-      @$el.html (
-        if typeof @template is 'function' then @template() else @template
-      )
+      if @map?
+        @$el.html (
+          if typeof @template is 'function' then @template() else @template
+        )
+
       cfg = @getMapOpts @mapExtraConfigs, @model
 
       if @map?

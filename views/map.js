@@ -257,7 +257,9 @@ define(function(require) {
     },
     render: function() {
       var cfg;
-      this.$el.html((typeof this.template === 'function' ? this.template() : this.template));
+      if (this.map != null) {
+        this.$el.html((typeof this.template === 'function' ? this.template() : this.template));
+      }
       cfg = this.getMapOpts(this.mapExtraConfigs, this.model);
       if (this.map != null) {
         this.map.setOptions(cfg);
