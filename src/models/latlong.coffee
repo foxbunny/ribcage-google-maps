@@ -33,9 +33,7 @@ define (require) ->
   # `ribcage.models.BaseModel`.
   #
   {Model: BaseModel} = require 'ribcage/models/base'
-  require '../gmaps'
-
-  {LatLng} = google.maps
+  {LatLng} = require '../gmaps'
 
   # ::TOC::
   #

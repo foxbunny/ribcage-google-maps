@@ -47,7 +47,7 @@ define (require) ->
     defaults: dh.extend
       heading: 0
       pitch: 0
-    , latLongModelMixin.mixin.defaults
+    , latLongModel.mixin.defaults
 
   # ### `#heading`
   #
@@ -69,7 +69,7 @@ define (require) ->
     get: () -> @get 'pitch'
     set: (v) -> @set pitch: parseFloat v
 
-  MapDataModel = latLongModelMixin.Model.extend mapDataModelMixin
+  MapDataModel = latLongModel.Model.extend mapDataModelMixin
 
   mixin: mapDataModelMixin
   Model: MapDataModel

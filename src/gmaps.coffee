@@ -62,4 +62,4 @@ define = ((root) ->
 ) this
 
 define () ->
-  google?.maps
+  null

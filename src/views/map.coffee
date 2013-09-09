@@ -39,9 +39,7 @@ define (require) ->
   _ = require 'underscore'
   $ = require 'jquery'
   {View: BaseView} = require 'ribcage/views/base'
-  require '../gmaps'
-
-  maps = google.maps
+  maps = require '../gmaps'
 
   # ::TOC::
   #
