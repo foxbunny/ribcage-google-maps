@@ -37,6 +37,22 @@ recommended setup. You may also substitute `gmaps.js` with your own version
 that does things differently (e.g., downloaded version of Google Maps API
 library, etc).
 
+## Quick example
+
+Here's a quick example with [`MapDataModel`](doc/models/map_data.mkd) and
+[`MapView`](doc/views/map.mkd):
+
+    var mapData = new MapDataModel({
+        lat: 37.783333,
+        long: -122.416667
+    });
+
+    var map = new MapView({model: mapData, el: '#map-canvas'});
+    map.render()
+
+This should render a map within an element with `id` attribute '#map-canvas'
+centered on San Francisco.
+
 ## API documentation
 
 Complete API documentation is located in the [`doc` directory](doc). These
