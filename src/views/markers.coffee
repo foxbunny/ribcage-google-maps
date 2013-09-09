@@ -92,7 +92,7 @@ define (require) ->
             map: @map
           marker.render()
           marker
-        ) m for m in @collection
+        ) m for m in @collection.models
       )
 
     # ### `#remove()`
