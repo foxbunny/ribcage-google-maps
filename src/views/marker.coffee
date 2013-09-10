@@ -15,6 +15,7 @@ define = ((root) ->
     require = (dep) ->
       (() ->
         switch dep
+          when 'dahelpers' then root.dahelpers
           when 'ribcage/views/base' then root.ribcage.views.baseView
           when '../gmaps' then root.google?.maps
           else null
@@ -31,6 +32,7 @@ define (require) ->
   # This module depends on Google Maps JavaScript API v3 library, Underscore,
   # and `ribcage.views.BaseView`.
   #
+  {type, empty} = require 'dahelpers'
   {View: BaseView} = require 'ribcage/views/base'
   maps = require '../gmaps'
 
@@ -104,6 +106,38 @@ define (require) ->
     #
     markerShape: null
 
+    # ### `#markerSize`
+    #
+    # Sets the marker size if `#markerIcon` is a string. It should be an array
+    # of two integers. Default is `null`.
+    #
+    markerSize: null
+
+    # ### `#markerOrigin`
+    #
+    # Origin point within the source image. This is used when using sprites, to
+    # specify the top left corner of the icon within the sprite. It should be
+    # an array of x and y coordinates. Default is `null`.
+    #
+    markerOrigin: null
+
+    # ### `#markerImageSize`
+    #
+    # Portion of the source image to use. This is useful when using sprites, to
+    # specify the part of the image the sprite corresponds to, along with
+    # `#markerOrigin` property. It should be an array of width and height
+    # integers. Default is `null`.
+    #
+    markerImageSize: null
+
+    # ### `#markerAnchor`
+    #
+    # Sets the anchor point of the marker relative to the image scaled to
+    # `#markerSize`. It should be an array of x and y coordinates. Default is
+    # `null` which sets the anchor to middle of the image's bottom edge.
+    #
+    markerAnchor: null
+
     # ### `#markerVisible`
     #
     # Whether marker is visible by default. Default is `true`.
@@ -160,6 +194,40 @@ define (require) ->
       else
         new maps.InfoWindow cfg
 
+    # ### `#getPoint(xy)`
+    #
+    # Returns a `google.maps.Point` object constructed from an array `xy` that
+    # contains the x and y coordinates.
+    #
+    getPoint: (xy) ->
+      return null if empty(xy) or not xy?
+      [x, y] = xy
+      new maps.Point x, y
+
+    # ### `#getSize(xy)`
+    #
+    # Returns a `google.maps.Size` object constructed from an array `xy` that
+    # cotains the width and height.
+    #
+    getSize: (xy) ->
+      return null if empty(xy) or not xy?
+      [x, y] = xy
+      new maps.Size x, y, 'px', 'px'
+
+    # ### `#getMarkerIcon()`
+    #
+    # Returns an object compliant with `google.maps.Icon` specification.
+    #
+    getMarkerIcon: () ->
+      if not type(@markerIcon, 'string')
+        @markerIcon
+      else
+        anchor: @getPoint @markerIconAnchor
+        origin: @getPoint @markerOrigin
+        scaledSize: @getSize @markerSize
+        size: @getSize @markerImageSize
+        url: @markerIcon
+
 
     # ### `#getMarkerAnim(v)`
     #
@@ -201,7 +269,7 @@ define (require) ->
         flat: not @markerShadow
         clickable: @markerClickable
         draggable: @markerDraggable
-        icon: @markerIcon
+        icon: @getMarkerIcon()
         shape: @markerShape
         visible: @markerVisible
 

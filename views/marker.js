@@ -10,6 +10,8 @@ define = (function(root) {
       return (function() {
         var _ref;
         switch (dep) {
+          case 'dahelpers':
+            return root.dahelpers;
           case 'ribcage/views/base':
             return root.ribcage.views.baseView;
           case '../gmaps':
@@ -32,7 +34,8 @@ define = (function(root) {
 })(this);
 
 define(function(require) {
-  var BaseView, MarkerView, maps, markerViewMixin;
+  var BaseView, MarkerView, empty, maps, markerViewMixin, type, _ref;
+  _ref = require('dahelpers'), type = _ref.type, empty = _ref.empty;
   BaseView = require('ribcage/views/base').View;
   maps = require('../gmaps');
   markerViewMixin = {
@@ -46,6 +49,10 @@ define(function(require) {
     markerDraggable: false,
     markerIcon: null,
     markerShape: null,
+    markerSize: null,
+    markerOrigin: null,
+    markerImageSize: null,
+    markerAnchor: null,
     markerVisible: true,
     infoTemplateSource: '',
     infoTemplate: function(data) {
@@ -66,6 +73,35 @@ define(function(require) {
         return this.infoWindow;
       } else {
         return new maps.InfoWindow(cfg);
+      }
+    },
+    getPoint: function(xy) {
+      var x, y;
+      if (empty(xy) || (xy == null)) {
+        return null;
+      }
+      x = xy[0], y = xy[1];
+      return new maps.Point(x, y);
+    },
+    getSize: function(xy) {
+      var x, y;
+      if (empty(xy) || (xy == null)) {
+        return null;
+      }
+      x = xy[0], y = xy[1];
+      return new maps.Size(x, y, 'px', 'px');
+    },
+    getMarkerIcon: function() {
+      if (!type(this.markerIcon, 'string')) {
+        return this.markerIcon;
+      } else {
+        return {
+          anchor: this.getPoint(this.markerIconAnchor),
+          origin: this.getPoint(this.markerOrigin),
+          scaledSize: this.getSize(this.markerSize),
+          size: this.getSize(this.markerImageSize),
+          url: this.markerIcon
+        };
       }
     },
     getMarkerAnim: function(v) {
@@ -90,7 +126,7 @@ define(function(require) {
         flat: !this.markerShadow,
         clickable: this.markerClickable,
         draggable: this.markerDraggable,
-        icon: this.markerIcon,
+        icon: this.getMarkerIcon(),
         shape: this.markerShape,
         visible: this.markerVisible
       };
@@ -129,15 +165,15 @@ define(function(require) {
       return this.marker.setVisible(false);
     },
     remove: function() {
-      var _ref;
+      var _ref1;
       if (this.marker == null) {
         return;
       }
       maps.event.clearListeners(this.marker);
       this.marker.setMap(null);
       this.marker = null;
-      if ((_ref = this.infoWindow) != null) {
-        _ref.setMap(null);
+      if ((_ref1 = this.infoWindow) != null) {
+        _ref1.setMap(null);
       }
       return this.infoWindow = null;
     }
