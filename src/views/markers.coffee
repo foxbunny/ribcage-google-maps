@@ -90,6 +90,7 @@ define (require) ->
           marker = new View
             model: m
             map: @map
+            others: this
           marker.render()
           marker
         ) m for m in @collection.models

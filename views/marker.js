@@ -40,7 +40,7 @@ define(function(require) {
   maps = require('../gmaps');
   markerViewMixin = {
     initialize: function(_arg) {
-      this.map = _arg.map;
+      this.map = _arg.map, this.others = _arg.others;
       return this.model.on('change', this.render, this);
     },
     markerShadow: false,

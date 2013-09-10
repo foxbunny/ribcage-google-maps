@@ -53,10 +53,14 @@ define (require) ->
     # The `settings` must contain a `map` key which should be a valid
     # `google.maps.Map` object.
     #
+    # The `others` key may be passed that points to the superview that manages
+    # a marker collection. This is not used in any way by this view, but may be
+    # useful if you are doing something in views that extend this constructor.
+    #
     # During initialization, the `#render()` method is bound to model's change
     # event and the view is rerendered each time the model is updated.
     #
-    initialize: ({@map}) ->
+    initialize: ({@map, @others}) ->
       @model.on 'change', @render, this
 
     # ### `#markerShadow`

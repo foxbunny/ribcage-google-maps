@@ -59,7 +59,8 @@ define(function(require) {
             View = _this.getMarkerView(m.toJSON());
             marker = new View({
               model: m,
-              map: _this.map
+              map: _this.map,
+              others: _this
             });
             marker.render();
             return marker;
