@@ -23,7 +23,7 @@
   "volo": {
     "dependencies": {
       "ribcage": "foxbunny/ribcage",
-      "dahelpers": "foxbunny/dahelpers/>0.2.1"
+      "dahelpers": "foxbunny/dahelpers/>=0.2.4"
     },
     "ignore": [
       "package.json",
