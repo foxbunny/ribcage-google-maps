@@ -309,7 +309,7 @@ define (require) ->
     #
     zoomControlStyle: null
 
-    # ### `overview`
+    # ### `#overview`
     #
     # The overview control options. Can be any of the following:
     #
@@ -321,7 +321,14 @@ define (require) ->
     #
     overview: false
 
-    # ### `streetView`
+    # ### `#stylers`
+    #
+    # The map stylers array compliant with `google.maps.MapTypeStyle` object
+    # specification. Default is `[]` (empty array).
+    #
+    styles: []
+
+    # ### `#streetView`
     #
     # Whether Street View is visible by default or not. Default is `false`.
     #
@@ -685,11 +692,16 @@ define (require) ->
         scaleControl: !!cfg.rotateControl
         scaleControlOptions:
           position: @getCtrlPos cfg.scaleControl
+        styles: cfg.styles
         streetViewPanorama: @getStreetView cfg
         streetViewControl: !!cfg.streetViewControl
         streetViewControlOptions:
           position: @getCtrlPos cfg.streetViewControl
         scrollwheel: cfg.wheel
+        zoomControl: !!cfg.zoomControl
+        zoomControlOptions:
+          position: @getCtrlPos cfg.zoomControl
+          style: @getZoomCtrlStyle cfg.zoomControlStyle
         zoom: cfg.zoom
 
     # ### `#initialize(settings)` ->

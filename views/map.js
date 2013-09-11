@@ -65,6 +65,7 @@ define(function(require) {
     zoomControl: null,
     zoomControlStyle: null,
     overview: false,
+    styles: [],
     streetView: false,
     streetViewContainer: null,
     streetViewControl: true,
@@ -242,12 +243,18 @@ define(function(require) {
         scaleControlOptions: {
           position: this.getCtrlPos(cfg.scaleControl)
         },
+        styles: cfg.styles,
         streetViewPanorama: this.getStreetView(cfg),
         streetViewControl: !!cfg.streetViewControl,
         streetViewControlOptions: {
           position: this.getCtrlPos(cfg.streetViewControl)
         },
         scrollwheel: cfg.wheel,
+        zoomControl: !!cfg.zoomControl,
+        zoomControlOptions: {
+          position: this.getCtrlPos(cfg.zoomControl),
+          style: this.getZoomCtrlStyle(cfg.zoomControlStyle)
+        },
         zoom: cfg.zoom
       };
     },
