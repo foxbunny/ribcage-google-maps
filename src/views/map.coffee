@@ -321,7 +321,7 @@ define (require) ->
     #
     overview: false
 
-    # ### `#stylers`
+    # ### `#styles`
     #
     # The map stylers array compliant with `google.maps.MapTypeStyle` object
     # specification. Default is `[]` (empty array).
@@ -638,6 +638,7 @@ define (require) ->
         'zoomControl'
         'zoomControlStyle'
         'overview'
+        'styles'
         'streetView'
         'streetViewControl'
         'streetViewDefaultUI'
