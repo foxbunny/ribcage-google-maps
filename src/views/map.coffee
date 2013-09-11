@@ -737,6 +737,8 @@ define (require) ->
       else:
         @map = new maps.Map @getMapContainer(), cfg
 
+      this
+
   # ## `MapView`
   #
   # Please see the documentation for [`mapViewMixin`](#mapViewMixin) for more

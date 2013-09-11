@@ -47,7 +47,7 @@ define(function(require) {
     render: function() {
       var m;
       this.remove();
-      return this.childViews = (function() {
+      this.childViews = (function() {
         var _i, _len, _ref, _results,
           _this = this;
         _ref = this.collection.models;
@@ -68,6 +68,7 @@ define(function(require) {
         }
         return _results;
       }).call(this);
+      return this;
     },
     remove: function() {
       var view, _i, _len, _ref;

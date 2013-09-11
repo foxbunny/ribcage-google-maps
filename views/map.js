@@ -271,9 +271,10 @@ define(function(require) {
       if (this.map != null) {
         this.map.setOptions(cfg);
       }
-      return {
+      ({
         "else": this.map = new maps.Map(this.getMapContainer(), cfg)
-      };
+      });
+      return this;
     }
   };
   MapView = BaseView.extend(mapViewMixin);

@@ -147,10 +147,11 @@ define(function(require) {
         }
         return _results;
       })()).length) {
-        return this.infoWindow = this.createInfoWindow(info);
+        this.infoWindow = this.createInfoWindow(info);
       } else {
-        return this.infoWindow = null;
+        this.infoWindow = null;
       }
+      return this;
     },
     show: function() {
       if (this.marker == null) {

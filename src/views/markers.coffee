@@ -96,6 +96,8 @@ define (require) ->
         ) m for m in @collection.models
       )
 
+      this
+
     # ### `#remove()`
     #
     # Removes all child views and their markers.

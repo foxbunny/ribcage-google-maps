@@ -291,6 +291,8 @@ define (require) ->
       else
         @infoWindow = null
 
+      this
+
     # ### `#show()`
     #
     # Show the marker.
