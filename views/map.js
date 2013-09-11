@@ -190,7 +190,7 @@ define(function(require) {
         cfg = {};
       }
       cfg = dh.clone(cfg);
-      _ref = ['mapType', 'zoom', 'minZoom', 'maxZoom', 'defaultUI', 'dblClickZoom', 'draggable', 'dragHoverCursor', 'dragMoveCursor', 'shortcuts', 'wheel', 'mapMaker', 'mapTypeControl', 'mapControlStyle', 'mapTypes', 'panControl', 'rotateControl', 'scaleControl', 'zoomControl', 'zoomControlStyle', 'overview', 'streetView', 'streetViewControl', 'streetViewDefaultUI', 'streetViewWheel', 'streetViewAddressControl', 'streetViewClickToGo', 'streetViewDblClickZoom', 'streetViewCloseButton', 'streetViewImageDates', 'streetViewLinks', 'streetViewPanControl', 'streetViewZoomControl', 'streetViewZoomControlStyle'];
+      _ref = ['mapType', 'zoom', 'minZoom', 'maxZoom', 'defaultUI', 'dblClickZoom', 'draggable', 'dragHoverCursor', 'dragMoveCursor', 'shortcuts', 'wheel', 'mapMaker', 'mapTypeControl', 'mapControlStyle', 'mapTypes', 'panControl', 'rotateControl', 'scaleControl', 'zoomControl', 'zoomControlStyle', 'overview', 'styles', 'streetView', 'streetViewControl', 'streetViewDefaultUI', 'streetViewWheel', 'streetViewAddressControl', 'streetViewClickToGo', 'streetViewDblClickZoom', 'streetViewCloseButton', 'streetViewImageDates', 'streetViewLinks', 'streetViewPanControl', 'streetViewZoomControl', 'streetViewZoomControlStyle'];
       _fn = function(o) {
         if (cfg[o] == null) {
           return cfg[o] = _this[o];
