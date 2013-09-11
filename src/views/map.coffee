@@ -37,7 +37,7 @@ define (require) ->
   # `ribcage.views.BaseView`.
   #
   _ = require 'underscore'
-  dh = require 'dahelpers'
+  {type, clone} = require 'dahelpers'
   {View: BaseView} = require 'ribcage/views/base'
   maps = require '../gmaps'
 
@@ -611,7 +611,7 @@ define (require) ->
     # argument should contain the model.
     #
     getMapOpts: (cfg={}, data) ->
-      cfg = dh.clone cfg
+      cfg = clone cfg
 
       # Set the defaults from the view constructor
       ((o) =>
@@ -725,10 +725,8 @@ define (require) ->
     # Renders the map and stores the reference to rendered map as `this.map`.
     #
     render: () ->
-      if @map?
-        @$el.html (
-          if typeof @template is 'function' then @template() else @template
-        )
+      if not @map?
+        @$el.html if type @template, 'function' then @template() else @template
 
       cfg = @getMapOpts @mapExtraConfigs, @model
 

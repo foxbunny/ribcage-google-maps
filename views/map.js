@@ -36,9 +36,9 @@ define = (function(root) {
 })(this);
 
 define(function(require) {
-  var BaseView, MapView, dh, mapViewMixin, maps, _;
+  var BaseView, MapView, clone, mapViewMixin, maps, type, _, _ref;
   _ = require('underscore');
-  dh = require('dahelpers');
+  _ref = require('dahelpers'), type = _ref.type, clone = _ref.clone;
   BaseView = require('ribcage/views/base').View;
   maps = require('../gmaps');
   mapViewMixin = {
@@ -184,20 +184,20 @@ define(function(require) {
       return new maps.StreetViewPanorama(svContainer, svCfg);
     },
     getMapOpts: function(cfg, data) {
-      var o, opts, _fn, _i, _len, _ref,
+      var o, opts, _fn, _i, _len, _ref1,
         _this = this;
       if (cfg == null) {
         cfg = {};
       }
-      cfg = dh.clone(cfg);
-      _ref = ['mapType', 'zoom', 'minZoom', 'maxZoom', 'defaultUI', 'dblClickZoom', 'draggable', 'dragHoverCursor', 'dragMoveCursor', 'shortcuts', 'wheel', 'mapMaker', 'mapTypeControl', 'mapControlStyle', 'mapTypes', 'panControl', 'rotateControl', 'scaleControl', 'zoomControl', 'zoomControlStyle', 'overview', 'styles', 'streetView', 'streetViewControl', 'streetViewDefaultUI', 'streetViewWheel', 'streetViewAddressControl', 'streetViewClickToGo', 'streetViewDblClickZoom', 'streetViewCloseButton', 'streetViewImageDates', 'streetViewLinks', 'streetViewPanControl', 'streetViewZoomControl', 'streetViewZoomControlStyle'];
+      cfg = clone(cfg);
+      _ref1 = ['mapType', 'zoom', 'minZoom', 'maxZoom', 'defaultUI', 'dblClickZoom', 'draggable', 'dragHoverCursor', 'dragMoveCursor', 'shortcuts', 'wheel', 'mapMaker', 'mapTypeControl', 'mapControlStyle', 'mapTypes', 'panControl', 'rotateControl', 'scaleControl', 'zoomControl', 'zoomControlStyle', 'overview', 'styles', 'streetView', 'streetViewControl', 'streetViewDefaultUI', 'streetViewWheel', 'streetViewAddressControl', 'streetViewClickToGo', 'streetViewDblClickZoom', 'streetViewCloseButton', 'streetViewImageDates', 'streetViewLinks', 'streetViewPanControl', 'streetViewZoomControl', 'streetViewZoomControlStyle'];
       _fn = function(o) {
         if (cfg[o] == null) {
           return cfg[o] = _this[o];
         }
       };
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        o = _ref[_i];
+      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+        o = _ref1[_i];
         _fn(o);
       }
       cfg.streetViewData = {
@@ -264,8 +264,8 @@ define(function(require) {
     },
     render: function() {
       var cfg;
-      if (this.map != null) {
-        this.$el.html((typeof this.template === 'function' ? this.template() : this.template));
+      if (this.map == null) {
+        this.$el.html(type(this.template, 'function') ? this.template() : this.template);
       }
       cfg = this.getMapOpts(this.mapExtraConfigs, this.model);
       if (this.map != null) {
