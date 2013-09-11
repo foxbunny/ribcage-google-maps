@@ -732,7 +732,7 @@ define (require) ->
 
       if @map?
         @map.setOptions(cfg)
-      else:
+      else
         @map = new maps.Map @getMapContainer(), cfg
 
       this

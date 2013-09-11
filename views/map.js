@@ -270,10 +270,9 @@ define(function(require) {
       cfg = this.getMapOpts(this.mapExtraConfigs, this.model);
       if (this.map != null) {
         this.map.setOptions(cfg);
+      } else {
+        this.map = new maps.Map(this.getMapContainer(), cfg);
       }
-      ({
-        "else": this.map = new maps.Map(this.getMapContainer(), cfg)
-      });
       return this;
     }
   };
