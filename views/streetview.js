@@ -79,14 +79,15 @@ define(function(require) {
       }
     },
     getStreetViewOpts: function(cfg, data) {
-      var o, _fn, _i, _len, _ref1;
+      var o, _fn, _i, _len, _ref1,
+        _this = this;
       if (cfg == null) {
         cfg = {};
       }
       _ref1 = ['streetViewDefaultUI', 'streetViewWheel', 'streetViewAddressControl', 'streetViewClickToGo', 'streetViewDblClickZoom', 'streetViewCloseButton', 'streetViewImageDates', 'streetViewLinks', 'streetViewPanControl', 'streetViewZoomControl', 'streetViewZoomControlStyle'];
       _fn = function(o) {
         if (cfg[o] == null) {
-          return cfg[o] = this[o];
+          return cfg[o] = _this[o];
         }
       };
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {

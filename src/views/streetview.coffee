@@ -232,7 +232,7 @@ define (require) ->
     # Returns the `maps.StreetViewPanorama` instance.
     #
     getStreetViewOpts: (cfg={}, data) ->
-      ((o) ->
+      ((o) =>
         cfg[o] = this[o] if not cfg[o]?
       ) o for o in [
         'streetViewDefaultUI'
