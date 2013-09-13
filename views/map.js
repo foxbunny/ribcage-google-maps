@@ -262,17 +262,23 @@ define(function(require) {
       this.mapExtraConfigs = _arg.mapExtraConfigs;
       return this.model.on('change', this.render, this);
     },
-    render: function() {
-      var cfg;
+    render: function(cb) {
+      var _this = this;
       if (this.map == null) {
         this.$el.html(type(this.template, 'function') ? this.template() : this.template);
       }
-      cfg = this.getMapOpts(this.mapExtraConfigs, this.model);
-      if (this.map != null) {
-        this.map.setOptions(cfg);
-      } else {
-        this.map = new maps.Map(this.getMapContainer(), cfg);
-      }
+      setTimeout(function() {
+        var cfg;
+        cfg = _this.getMapOpts(_this.mapExtraConfigs, _this.model);
+        if (_this.map != null) {
+          _this.map.setOptions(cfg);
+        } else {
+          _this.map = new maps.Map(_this.getMapContainer(), cfg);
+        }
+        if (type(cb, 'function')) {
+          return cb(_this, _this.map, cfg);
+        }
+      }, 1);
       return this;
     }
   };

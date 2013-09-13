@@ -720,20 +720,37 @@ define (require) ->
     initialize: ({@mapExtraConfigs}) ->
       @model.on 'change', @render, this
 
-    # ### `#render()`
+    # ### `#render(cb)`
     #
     # Renders the map and stores the reference to rendered map as `this.map`.
     #
-    render: () ->
+    # Unlike standard synchronous `#render()` methods, this render method will
+    # return `this` before rendering the map. Rendering happens with a slight
+    # delay of 1ms, which is not significant, but gives the application enough
+    # time to attach `el` to the DOM tree and prevent the map from rendering in
+    # a 0-height box (essentially hidden away).
+    #
+    # A single callback function can be specified which is called as soon as
+    # the new map instance is created. The callback will receive three
+    # arguments, a reference to the view, a reference to the map instance, and
+    # an object containing the configuration used to create the map.
+    #
+    render: (cb) ->
       if not @map?
         @$el.html if type @template, 'function' then @template() else @template
 
-      cfg = @getMapOpts @mapExtraConfigs, @model
+      setTimeout () =>
+        cfg = @getMapOpts @mapExtraConfigs, @model
 
-      if @map?
-        @map.setOptions(cfg)
-      else
-        @map = new maps.Map @getMapContainer(), cfg
+        if @map?
+          @map.setOptions(cfg)
+        else
+          @map = new maps.Map @getMapContainer(), cfg
+
+        if type cb, 'function'
+          cb(this, @map, cfg)
+
+      , 1
 
       this
 
