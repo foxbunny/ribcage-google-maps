@@ -328,166 +328,6 @@ define (require) ->
     #
     styles: []
 
-    # ### `#streetView`
-    #
-    # Whether Street View is visible by default or not. Default is `false`.
-    #
-    streetView: false
-
-    # ### `#streetViewContainer`
-    #
-    # jQuery selector for the streetview container. The container must be
-    # inside the view's `el`. Default is null (use same element as map).
-    #
-    streetViewContainer: null
-
-    # ### `#streetViewControl`
-    #
-    # Position of the Street View control (the pegman). Any of the following:
-    #
-    #  + 'bottom_center'
-    #  + 'bottom_left'
-    #  + 'bottom_right'
-    #  + 'left_bottom'
-    #  + 'left_center'
-    #  + 'left_top'
-    #  + 'right_bottom'
-    #  + 'right_center'
-    #  + 'right_top'
-    #  + 'top_center'
-    #  + 'top_left'
-    #  + 'top_right'
-    #  + `false` (disabled)
-    #  + `true` (enabled in default position)
-    #
-    # Default is `true`.
-    #
-    streetViewControl: true
-
-    # ### `#streetViewDefaultUI`
-    #
-    # Whether all of default UI is enabled. Default is `true`.
-    #
-    streetViewDefaultUI: true
-
-    # ### `#streetViewWheel`
-    #
-    # Whether scroll wheel zooming is enabled in Street View. Default is
-    # `true`.
-    #
-    streetViewWheel: true
-
-    # ### `#streetViewAddressControl`
-    #
-    # Position of the address control in Street View. Any of the following:
-    #
-    #  + 'bottom_center'
-    #  + 'bottom_left'
-    #  + 'bottom_right'
-    #  + 'left_bottom'
-    #  + 'left_center'
-    #  + 'left_top'
-    #  + 'right_bottom'
-    #  + 'right_center'
-    #  + 'right_top'
-    #  + 'top_center'
-    #  + 'top_left'
-    #  + 'top_right'
-    #  + `false` (disabled)
-    #  + `true` (enabled in default position)
-    #
-    # Default is `true`.
-    #
-    streetViewAddressControl: true
-
-    # ### `#streetViewClickToGo`
-    #
-    # Whether click-to-go behavior is enabled. Default is `true`.
-    #
-    streetViewClickToGo: true
-
-    # ### `#streetViewDblClickZoom`
-    #
-    # Whether double-click zoom is enabled. Default is `false`.
-    #
-    streetViewDblClickZoom: false
-
-    # ### `#streetViewCloseButton`
-    #
-    # Whether close button is enabled. Default is `false`.
-    #
-    streetViewCloseButton: false
-
-    # ### `#streetViewImageDates`
-    #
-    # Whether image acquisition date control is enabled. Default is `false`.
-    #
-    streetViewImageDates: false
-
-    # ### `#streetViewLinks`
-    #
-    # Whether links control is enabled. Default is `false`
-    #
-    streetViewLinks: false
-
-    # ### `#streetViewPanControl`
-    #
-    # Position of the pan control. Any of the following:
-    #
-    #  + 'bottom_center'
-    #  + 'bottom_left'
-    #  + 'bottom_right'
-    #  + 'left_bottom'
-    #  + 'left_center'
-    #  + 'left_top'
-    #  + 'right_bottom'
-    #  + 'right_center'
-    #  + 'right_top'
-    #  + 'top_center'
-    #  + 'top_left'
-    #  + 'top_right'
-    #  + `false` (disabled)
-    #  + `true` (enabled in default position)
-    #
-    # Default is `false`.
-    #
-    streetViewPanControl: false
-
-    # ### `#streetViewZoomControl`
-    #
-    # Position of the zoom control in Street View. Any of the following values:
-    #
-    #  + 'bottom_center'
-    #  + 'bottom_left'
-    #  + 'bottom_right'
-    #  + 'left_bottom'
-    #  + 'left_center'
-    #  + 'left_top'
-    #  + 'right_bottom'
-    #  + 'right_center'
-    #  + 'right_top'
-    #  + 'top_center'
-    #  + 'top_left'
-    #  + 'top_right'
-    #  + `false` (disabled)
-    #  + `true` (enabled in default position)
-    #
-    # Default is `true`.
-    #
-    streetViewZoomControl: null
-
-    # ### `#streetViewZoomControlStyle`
-    #
-    # Can be any of the following values:
-    #
-    #  + 'large'
-    #  + 'small'
-    #  + `null` (default style)
-    #
-    # Default is null.
-    #
-    streetViewZoomControlStyle: null
-
     # ### `#getCtrlPos(v)`
     #
     # Converts the `MapView` control position string to Maps API version.
@@ -562,47 +402,6 @@ define (require) ->
       return @el if not mapContainer.length
       mapContainer[0]
 
-    # ### `#getStreetViewContainer()`
-    #
-    # Return the node to use a the Street View container.
-    #
-    getStreetViewContainer: () ->
-      return undefined if not @streetViewContainer?
-      svContainer = @$ @streetViewContainer
-      return undefined if not svContainer.length
-      svContainer[0]
-
-    # ### `#getStreetView(cfg)`
-    #
-    # Returns the `maps.StreetViewPanorama` instance.
-    #
-    getStreetView: (cfg) ->
-      svCfg =
-        addressControl: !!cfg.streetViewAddressControl
-        addressControlOptions:
-          position: @getCtrlPos cfg.streetViewAddressControl
-        clickToGo: cfg.streetViewClickToGo
-        disableDefaultUI: not cfg.streetViewDefaultUI
-        disableDoubleClickZoom: not cfg.streetViewDblClickZoom
-        enableCloseButton: cfg.streetViewCloseButton
-        imageDateControl: cfg.streetViewImageDates
-        linksControl: cfg.streetViewLinks
-        panControl: !!cfg.streetViewPanControl
-        panControlOptions:
-          position: @getCtrlPos cfg.streetViewPanControl
-        position: cfg.streetViewData.position
-        pov: cfg.streetViewData.pov
-        scrollWheel: cfg.streetViewWheel
-        visible: cfg.streetView
-        zoomControl: !!cfg.streetViewZoomControl
-        zoomControlOptions:
-          position: @getCtrlPos cfg.streetViewZoomControl
-          style: @getZoomCtrlStyle cfg.streetViewZoomControlStyle
-
-      svContainer = @getStreetViewContainer()
-
-      new maps.StreetViewPanorama svContainer, svCfg
-
     # ### `#getMapOpts([cfg,] data)`
     #
     # Compiles the options object for use with the Maps API `Map` constructor.
@@ -640,26 +439,7 @@ define (require) ->
         'overview'
         'styles'
         'streetView'
-        'streetViewControl'
-        'streetViewDefaultUI'
-        'streetViewWheel'
-        'streetViewAddressControl'
-        'streetViewClickToGo'
-        'streetViewDblClickZoom'
-        'streetViewCloseButton'
-        'streetViewImageDates'
-        'streetViewLinks'
-        'streetViewPanControl'
-        'streetViewZoomControl'
-        'streetViewZoomControlStyle'
       ]
-
-      # Set data contained in the model
-      cfg.streetViewData =
-        pov:
-          heading: data.heading()
-          pitch: data.pitch()
-        position: data.coords()
 
       # Convert to Google Maps API format
       opts =
@@ -694,7 +474,6 @@ define (require) ->
         scaleControlOptions:
           position: @getCtrlPos cfg.scaleControl
         styles: cfg.styles
-        streetViewPanorama: @getStreetView cfg
         streetViewControl: !!cfg.streetViewControl
         streetViewControlOptions:
           position: @getCtrlPos cfg.streetViewControl
@@ -741,15 +520,11 @@ define (require) ->
 
       setTimeout () =>
         cfg = @getMapOpts @mapExtraConfigs, @model
-
         if @map?
           @map.setOptions(cfg)
         else
           @map = new maps.Map @getMapContainer(), cfg
-
-        if type cb, 'function'
-          cb(this, @map, cfg)
-
+        cb(this, @map, cfg) if type cb, 'function'
       , 1
 
       this

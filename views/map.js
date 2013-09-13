@@ -66,20 +66,6 @@ define(function(require) {
     zoomControlStyle: null,
     overview: false,
     styles: [],
-    streetView: false,
-    streetViewContainer: null,
-    streetViewControl: true,
-    streetViewDefaultUI: true,
-    streetViewWheel: true,
-    streetViewAddressControl: true,
-    streetViewClickToGo: true,
-    streetViewDblClickZoom: false,
-    streetViewCloseButton: false,
-    streetViewImageDates: false,
-    streetViewLinks: false,
-    streetViewPanControl: false,
-    streetViewZoomControl: null,
-    streetViewZoomControlStyle: null,
     getCtrlPos: function(v) {
       if ((v == null) || (v === true || v === false)) {
         return void 0;
@@ -142,47 +128,6 @@ define(function(require) {
       }
       return mapContainer[0];
     },
-    getStreetViewContainer: function() {
-      var svContainer;
-      if (this.streetViewContainer == null) {
-        return void 0;
-      }
-      svContainer = this.$(this.streetViewContainer);
-      if (!svContainer.length) {
-        return void 0;
-      }
-      return svContainer[0];
-    },
-    getStreetView: function(cfg) {
-      var svCfg, svContainer;
-      svCfg = {
-        addressControl: !!cfg.streetViewAddressControl,
-        addressControlOptions: {
-          position: this.getCtrlPos(cfg.streetViewAddressControl)
-        },
-        clickToGo: cfg.streetViewClickToGo,
-        disableDefaultUI: !cfg.streetViewDefaultUI,
-        disableDoubleClickZoom: !cfg.streetViewDblClickZoom,
-        enableCloseButton: cfg.streetViewCloseButton,
-        imageDateControl: cfg.streetViewImageDates,
-        linksControl: cfg.streetViewLinks,
-        panControl: !!cfg.streetViewPanControl,
-        panControlOptions: {
-          position: this.getCtrlPos(cfg.streetViewPanControl)
-        },
-        position: cfg.streetViewData.position,
-        pov: cfg.streetViewData.pov,
-        scrollWheel: cfg.streetViewWheel,
-        visible: cfg.streetView,
-        zoomControl: !!cfg.streetViewZoomControl,
-        zoomControlOptions: {
-          position: this.getCtrlPos(cfg.streetViewZoomControl),
-          style: this.getZoomCtrlStyle(cfg.streetViewZoomControlStyle)
-        }
-      };
-      svContainer = this.getStreetViewContainer();
-      return new maps.StreetViewPanorama(svContainer, svCfg);
-    },
     getMapOpts: function(cfg, data) {
       var o, opts, _fn, _i, _len, _ref1,
         _this = this;
@@ -190,7 +135,7 @@ define(function(require) {
         cfg = {};
       }
       cfg = clone(cfg);
-      _ref1 = ['mapType', 'zoom', 'minZoom', 'maxZoom', 'defaultUI', 'dblClickZoom', 'draggable', 'dragHoverCursor', 'dragMoveCursor', 'shortcuts', 'wheel', 'mapMaker', 'mapTypeControl', 'mapControlStyle', 'mapTypes', 'panControl', 'rotateControl', 'scaleControl', 'zoomControl', 'zoomControlStyle', 'overview', 'styles', 'streetView', 'streetViewControl', 'streetViewDefaultUI', 'streetViewWheel', 'streetViewAddressControl', 'streetViewClickToGo', 'streetViewDblClickZoom', 'streetViewCloseButton', 'streetViewImageDates', 'streetViewLinks', 'streetViewPanControl', 'streetViewZoomControl', 'streetViewZoomControlStyle'];
+      _ref1 = ['mapType', 'zoom', 'minZoom', 'maxZoom', 'defaultUI', 'dblClickZoom', 'draggable', 'dragHoverCursor', 'dragMoveCursor', 'shortcuts', 'wheel', 'mapMaker', 'mapTypeControl', 'mapControlStyle', 'mapTypes', 'panControl', 'rotateControl', 'scaleControl', 'zoomControl', 'zoomControlStyle', 'overview', 'styles', 'streetView'];
       _fn = function(o) {
         if (cfg[o] == null) {
           return cfg[o] = _this[o];
@@ -200,13 +145,6 @@ define(function(require) {
         o = _ref1[_i];
         _fn(o);
       }
-      cfg.streetViewData = {
-        pov: {
-          heading: data.heading(),
-          pitch: data.pitch()
-        },
-        position: data.coords()
-      };
       return opts = {
         center: data.coords(),
         heading: data.heading(),
@@ -244,7 +182,6 @@ define(function(require) {
           position: this.getCtrlPos(cfg.scaleControl)
         },
         styles: cfg.styles,
-        streetViewPanorama: this.getStreetView(cfg),
         streetViewControl: !!cfg.streetViewControl,
         streetViewControlOptions: {
           position: this.getCtrlPos(cfg.streetViewControl)
