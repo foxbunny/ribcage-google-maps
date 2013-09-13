@@ -64,6 +64,7 @@ define(function(require) {
     scaleControl: true,
     zoomControl: null,
     zoomControlStyle: null,
+    streetViewControl: true,
     overview: false,
     styles: [],
     getCtrlPos: function(v) {
@@ -135,7 +136,7 @@ define(function(require) {
         cfg = {};
       }
       cfg = clone(cfg);
-      _ref1 = ['mapType', 'zoom', 'minZoom', 'maxZoom', 'defaultUI', 'dblClickZoom', 'draggable', 'dragHoverCursor', 'dragMoveCursor', 'shortcuts', 'wheel', 'mapMaker', 'mapTypeControl', 'mapControlStyle', 'mapTypes', 'panControl', 'rotateControl', 'scaleControl', 'zoomControl', 'zoomControlStyle', 'overview', 'styles', 'streetView'];
+      _ref1 = ['mapType', 'zoom', 'minZoom', 'maxZoom', 'defaultUI', 'dblClickZoom', 'draggable', 'dragHoverCursor', 'dragMoveCursor', 'shortcuts', 'wheel', 'mapMaker', 'mapTypeControl', 'mapControlStyle', 'mapTypes', 'panControl', 'rotateControl', 'scaleControl', 'zoomControl', 'zoomControlStyle', 'streetView', 'streetViewControl', 'overview', 'styles'];
       _fn = function(o) {
         if (cfg[o] == null) {
           return cfg[o] = _this[o];

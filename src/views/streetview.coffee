@@ -75,29 +75,6 @@ define (require) ->
     #
     visible: true
 
-    # ### `#streetViewControl`
-    #
-    # Position of the Street View control (the pegman). Any of the following:
-    #
-    #  + 'bottom_center'
-    #  + 'bottom_left'
-    #  + 'bottom_right'
-    #  + 'left_bottom'
-    #  + 'left_center'
-    #  + 'left_top'
-    #  + 'right_bottom'
-    #  + 'right_center'
-    #  + 'right_top'
-    #  + 'top_center'
-    #  + 'top_left'
-    #  + 'top_right'
-    #  + `false` (disabled)
-    #  + `true` (enabled in default position)
-    #
-    # Default is `true`.
-    #
-    streetViewControl: true
-
     # ### `#streetViewDefaultUI`
     #
     # Whether all of default UI is enabled. Default is `true`.
@@ -255,7 +232,6 @@ define (require) ->
       ((o) ->
         cfg[o] = this[o] if not cfg[o]?
       ) o for o in [
-        'streetViewControl'
         'streetViewDefaultUI'
         'streetViewWheel'
         'streetViewAddressControl'

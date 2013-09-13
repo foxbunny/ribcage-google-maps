@@ -45,7 +45,6 @@ define(function(require) {
     template: '',
     streetViewContainer: null,
     visible: true,
-    streetViewControl: true,
     streetViewDefaultUI: true,
     streetViewWheel: true,
     streetViewAddressControl: true,
@@ -84,7 +83,7 @@ define(function(require) {
       if (cfg == null) {
         cfg = {};
       }
-      _ref1 = ['streetViewControl', 'streetViewDefaultUI', 'streetViewWheel', 'streetViewAddressControl', 'streetViewClickToGo', 'streetViewDblClickZoom', 'streetViewCloseButton', 'streetViewImageDates', 'streetViewLinks', 'streetViewPanControl', 'streetViewZoomControl', 'streetViewZoomControlStyle'];
+      _ref1 = ['streetViewDefaultUI', 'streetViewWheel', 'streetViewAddressControl', 'streetViewClickToGo', 'streetViewDblClickZoom', 'streetViewCloseButton', 'streetViewImageDates', 'streetViewLinks', 'streetViewPanControl', 'streetViewZoomControl', 'streetViewZoomControlStyle'];
       _fn = function(o) {
         if (cfg[o] == null) {
           return cfg[o] = this[o];

@@ -309,6 +309,29 @@ define (require) ->
     #
     zoomControlStyle: null
 
+    # ### `#streetViewControl`
+    #
+    # Position of the Street View control (the pegman). Any of the following:
+    #
+    #  + 'bottom_center'
+    #  + 'bottom_left'
+    #  + 'bottom_right'
+    #  + 'left_bottom'
+    #  + 'left_center'
+    #  + 'left_top'
+    #  + 'right_bottom'
+    #  + 'right_center'
+    #  + 'right_top'
+    #  + 'top_center'
+    #  + 'top_left'
+    #  + 'top_right'
+    #  + `false` (disabled)
+    #  + `true` (enabled in default position)
+    #
+    # Default is `true`.
+    #
+    streetViewControl: true
+
     # ### `#overview`
     #
     # The overview control options. Can be any of the following:
@@ -436,9 +459,10 @@ define (require) ->
         'scaleControl'
         'zoomControl'
         'zoomControlStyle'
+        'streetView'
+        'streetViewControl'
         'overview'
         'styles'
-        'streetView'
       ]
 
       # Convert to Google Maps API format
