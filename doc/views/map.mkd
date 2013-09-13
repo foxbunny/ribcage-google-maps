@@ -35,20 +35,6 @@ This module depends on Google Maps API v3 library, Underscore, jQuery, and
    - [`#zoomControlStyle`](#zoomcontrolstyle)
    - [`#overview`](#overview)
    - [`#styles`](#styles)
-   - [`#streetView`](#streetview)
-   - [`#streetViewContainer`](#streetviewcontainer)
-   - [`#streetViewControl`](#streetviewcontrol)
-   - [`#streetViewDefaultUI`](#streetviewdefaultui)
-   - [`#streetViewWheel`](#streetviewwheel)
-   - [`#streetViewAddressControl`](#streetviewaddresscontrol)
-   - [`#streetViewClickToGo`](#streetviewclicktogo)
-   - [`#streetViewDblClickZoom`](#streetviewdblclickzoom)
-   - [`#streetViewCloseButton`](#streetviewclosebutton)
-   - [`#streetViewImageDates`](#streetviewimagedates)
-   - [`#streetViewLinks`](#streetviewlinks)
-   - [`#streetViewPanControl`](#streetviewpancontrol)
-   - [`#streetViewZoomControl`](#streetviewzoomcontrol)
-   - [`#streetViewZoomControlStyle`](#streetviewzoomcontrolstyle)
    - [`#getCtrlPos(v)`](#getctrlpos-v)
    - [`#getMapType(v)`](#getmaptype-v)
    - [`getMapTypes(a)`](#getmaptypes-a)
@@ -56,8 +42,6 @@ This module depends on Google Maps API v3 library, Underscore, jQuery, and
    - [`getOverviewOpen(v)`](#getoverviewopen-v)
    - [`#getCoords(lat, long)`](#getcoords-lat-long)
    - [`#getMapContainer()`](#getmapcontainer)
-   - [`#getStreetViewContainer()`](#getstreetviewcontainer)
-   - [`#getStreetView(cfg)`](#getstreetview-cfg)
    - [`#getMapOpts([cfg,] data)`](#getmapopts-cfg-data)
    - [`#render(cb)`](#render-cb)
  + [`MapView`](#mapview)
@@ -306,142 +290,6 @@ Default is `false`
 The map stylers array compliant with `google.maps.MapTypeStyle` object
 specification. Default is `[]` (empty array).
 
-### `#streetView` <a name="streetview"></a>
-
-Whether Street View is visible by default or not. Default is `false`.
-
-### `#streetViewContainer` <a name="streetviewcontainer"></a>
-
-jQuery selector for the streetview container. The container must be inside the
-view's `el`. Default is null (use same element as map).
-
-### `#streetViewControl` <a name="streetviewcontrol"></a>
-
-Position of the Street View control (the pegman). Any of the following:
-
- + 'bottom_center'
- + 'bottom_left'
- + 'bottom_right'
- + 'left_bottom'
- + 'left_center'
- + 'left_top'
- + 'right_bottom'
- + 'right_center'
- + 'right_top'
- + 'top_center'
- + 'top_left'
- + 'top_right'
- + `false` (disabled)
- + `true` (enabled in default position)
-
-
-Default is `true`.
-
-### `#streetViewDefaultUI` <a name="streetviewdefaultui"></a>
-
-Whether all of default UI is enabled. Default is `true`.
-
-### `#streetViewWheel` <a name="streetviewwheel"></a>
-
-Whether scroll wheel zooming is enabled in Street View. Default is `true`.
-
-### `#streetViewAddressControl` <a name="streetviewaddresscontrol"></a>
-
-Position of the address control in Street View. Any of the following:
-
- + 'bottom_center'
- + 'bottom_left'
- + 'bottom_right'
- + 'left_bottom'
- + 'left_center'
- + 'left_top'
- + 'right_bottom'
- + 'right_center'
- + 'right_top'
- + 'top_center'
- + 'top_left'
- + 'top_right'
- + `false` (disabled)
- + `true` (enabled in default position)
-
-
-Default is `true`.
-
-### `#streetViewClickToGo` <a name="streetviewclicktogo"></a>
-
-Whether click-to-go behavior is enabled. Default is `true`.
-
-### `#streetViewDblClickZoom` <a name="streetviewdblclickzoom"></a>
-
-Whether double-click zoom is enabled. Default is `false`.
-
-### `#streetViewCloseButton` <a name="streetviewclosebutton"></a>
-
-Whether close button is enabled. Default is `false`.
-
-### `#streetViewImageDates` <a name="streetviewimagedates"></a>
-
-Whether image acquisition date control is enabled. Default is `false`.
-
-### `#streetViewLinks` <a name="streetviewlinks"></a>
-
-Whether links control is enabled. Default is `false`
-
-### `#streetViewPanControl` <a name="streetviewpancontrol"></a>
-
-Position of the pan control. Any of the following:
-
- + 'bottom_center'
- + 'bottom_left'
- + 'bottom_right'
- + 'left_bottom'
- + 'left_center'
- + 'left_top'
- + 'right_bottom'
- + 'right_center'
- + 'right_top'
- + 'top_center'
- + 'top_left'
- + 'top_right'
- + `false` (disabled)
- + `true` (enabled in default position)
-
-
-Default is `false`.
-
-### `#streetViewZoomControl` <a name="streetviewzoomcontrol"></a>
-
-Position of the zoom control in Street View. Any of the following values:
-
- + 'bottom_center'
- + 'bottom_left'
- + 'bottom_right'
- + 'left_bottom'
- + 'left_center'
- + 'left_top'
- + 'right_bottom'
- + 'right_center'
- + 'right_top'
- + 'top_center'
- + 'top_left'
- + 'top_right'
- + `false` (disabled)
- + `true` (enabled in default position)
-
-
-Default is `true`.
-
-### `#streetViewZoomControlStyle` <a name="streetviewzoomcontrolstyle"></a>
-
-Can be any of the following values:
-
- + 'large'
- + 'small'
- + `null` (default style)
-
-
-Default is null.
-
 ### `#getCtrlPos(v)` <a name="getctrlpos-v"></a>
 
 Converts the `MapView` control position string to Maps API version.
@@ -478,14 +326,6 @@ The `lat` and `long` can be strings and will be converted to floats using
 
 Return the node to use as map container.
 
-### `#getStreetViewContainer()` <a name="getstreetviewcontainer"></a>
-
-Return the node to use a the Street View container.
-
-### `#getStreetView(cfg)` <a name="getstreetview-cfg"></a>
-
-Returns the `maps.StreetViewPanorama` instance.
-
 ### `#getMapOpts([cfg,] data)` <a name="getmapopts-cfg-data"></a>
 
 Compiles the options object for use with the Maps API `Map` constructor. The
@@ -493,15 +333,11 @@ Compiles the options object for use with the Maps API `Map` constructor. The
 constructor. It defaults to `{}` if not supplied. The `data` argument should
 contain the model.
 
-Set the defaults from the view constructor Set data contained in the model
-Convert to Google Maps API format ### `#initialize(settings)` ->
+Set the defaults from the view constructor Convert to Google Maps API format
+### `#initialize(settings)` ->
 
-The settings object may contain a `mapConfig` key that will be used to
+The settings object may contain a `mapExtraConfigs` key that will be used to
 dynamically specify or override options set in the view constructor.
-
-The `mapExtraConfigs` key can be used to supply raw Google Maps API settings.
-These settings will override any settings that are specified in the view
-constructor or `mapConfig` keys.
 
 The view will also bind its `#render()` method to model's change event so the
 map will update automatically whenever model data changes.

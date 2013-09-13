@@ -1,0 +1,215 @@
+# Street View view <a name="street-view-view"></a>
+
+This module implements a model view that displays Street View using Google Maps
+JavaScript API v3 and model data.
+
+This module is in UMD format. It will create a
+`ribcageGoogleMaps.views.streetView`, `ribcageGoogleMaps.views.StreetView`, and
+`ribcageGoogleMaps.viewMixins.StreetView` globals if not used with an AMD
+loader such as RequireJS.
+
+This module depends on Google Maps API v3 library, Underscore, jQuery, and
+`ribcage.views.BaseView`.
+
+## `streetViewMixin` <a name="streetviewmixin"></a>
+
+This mixin implements the API for the `StreetView`.
+
+The model passed to `StreetView` should contain information about various
+coordinates. The properties on the view itself control the overall appearance
+of the Street View such as placement of controls, and similar.
+
+### `#template` <a name="template"></a>
+
+Template to render before rendering the map. Overriding this can be useful if
+you want to render Street View and map in separate containers. Otherwise, the
+default is empty string.
+
+If this attribute is a function, it will be called without arguments and it
+will be expected to return the string to use as HTML. The resulting HTML will
+be appended into the `el`.
+
+### `#streetViewContainer` <a name="streetviewcontainer"></a>
+
+jQuery selector for the streetview container. The container must be inside the
+view's `el`. Default is null (use same element as map).
+
+### `#visible` <a name="visible"></a>
+
+Whether Street View is visible by default or not. Default is `true`.
+
+### `#streetViewControl` <a name="streetviewcontrol"></a>
+
+Position of the Street View control (the pegman). Any of the following:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `true`.
+
+### `#streetViewDefaultUI` <a name="streetviewdefaultui"></a>
+
+Whether all of default UI is enabled. Default is `true`.
+
+### `#streetViewWheel` <a name="streetviewwheel"></a>
+
+Whether scroll wheel zooming is enabled in Street View. Default is `true`.
+
+### `#streetViewAddressControl` <a name="streetviewaddresscontrol"></a>
+
+Position of the address control in Street View. Any of the following:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `true`.
+
+### `#streetViewClickToGo` <a name="streetviewclicktogo"></a>
+
+Whether click-to-go behavior is enabled. Default is `true`.
+
+### `#streetViewDblClickZoom` <a name="streetviewdblclickzoom"></a>
+
+Whether double-click zoom is enabled. Default is `false`.
+
+### `#streetViewCloseButton` <a name="streetviewclosebutton"></a>
+
+Whether close button is enabled. Default is `false`.
+
+### `#streetViewImageDates` <a name="streetviewimagedates"></a>
+
+Whether image acquisition date control is enabled. Default is `false`.
+
+### `#streetViewLinks` <a name="streetviewlinks"></a>
+
+Whether links control is enabled. Default is `false`
+
+### `#streetViewPanControl` <a name="streetviewpancontrol"></a>
+
+Position of the pan control. Any of the following:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `false`.
+
+### `#streetViewZoomControl` <a name="streetviewzoomcontrol"></a>
+
+Position of the zoom control in Street View. Any of the following values:
+
+ + 'bottom_center'
+ + 'bottom_left'
+ + 'bottom_right'
+ + 'left_bottom'
+ + 'left_center'
+ + 'left_top'
+ + 'right_bottom'
+ + 'right_center'
+ + 'right_top'
+ + 'top_center'
+ + 'top_left'
+ + 'top_right'
+ + `false` (disabled)
+ + `true` (enabled in default position)
+
+
+Default is `true`.
+
+### `#streetViewZoomControlStyle` <a name="streetviewzoomcontrolstyle"></a>
+
+Can be any of the following values:
+
+ + 'large'
+ + 'small'
+ + `null` (default style)
+
+
+Default is null.
+
+### `#getCtrlPos(v)` <a name="getctrlpos-v"></a>
+
+Converts the `MapView` control position string to Maps API version.
+
+### `#getZoomCtrlStyle(v)` <a name="getzoomctrlstyle-v"></a>
+
+Converts the `MapView` zoom control style to Maps API version.
+
+### `#getStreetViewContainer()` <a name="getstreetviewcontainer"></a>
+
+Return the node to use a the Street View container.
+
+### `#getStreetViewOpts(cfg, data)` <a name="getstreetviewopts-cfg-data"></a>
+
+Returns the `maps.StreetViewPanorama` instance.
+
+## `#initialize(settings)` <a name="initialize-settings"></a>
+
+The settings object may contain `svExtraConfigs` key which will be used to
+override any of the view's settings during rendering.
+
+Unlike the `MapView`, this view doesn't do any data-binding. It will not render
+more than once.
+
+### `#render(cb)` <a name="render-cb"></a>
+
+Renders the Street View panorama and stores the reference to rendered panorama
+as `this.panorama`.
+
+Unlike standard synchronous `#render()` methods, this render method will return
+`this` before rendering the panorama. Rendering happens with a slight delay of
+1ms, which is not significant, but gives the application enough time to attach
+`el` to the DOM tree and prevent the map from rendering in a 0-height box
+(essentially hidden away).
+
+A single callback function can be specified which is called as soon as the new
+map instance is created. The callback will receive three arguments, a reference
+to the view, a reference to the panorama instance, and an object containing the
+configuration used to create the panorama.
+
+## `StreetView` <a name="streetview"></a>
+
+Please see the documentation for [`streetViewMixin`](#streetviewmixin) for more
+information on this view's API.
+
+## Exports <a name="exports"></a>
+
+This module exports `mixin` and `View` properties.

@@ -486,12 +486,8 @@ define (require) ->
 
     # ### `#initialize(settings)` ->
     #
-    # The settings object may contain a `mapConfig` key that will be used to
-    # dynamically specify or override options set in the view constructor.
-    #
-    # The `mapExtraConfigs` key can be used to supply raw Google Maps API
-    # settings. These settings will override any settings that are specified in
-    # the view constructor or `mapConfig` keys.
+    # The settings object may contain a `mapExtraConfigs` key that will be used
+    # to dynamically specify or override options set in the view constructor.
     #
     # The view will also bind its `#render()` method to model's change event so
     # the map will update automatically whenever model data changes.

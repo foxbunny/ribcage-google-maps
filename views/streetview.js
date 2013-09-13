@@ -139,7 +139,10 @@ define(function(require) {
         }
         svContainer = _this.getStreetViewContainer();
         svCfg = _this.getStreetViewOpts(_this.svExtraConfigs, _this.model);
-        return _this.panorama = new maps.StreetViewPanorama(svContainer, svCfg);
+        _this.panorama = new maps.StreetViewPanorama(svContainer, svCfg);
+        if (type(cb, 'function')) {
+          return cb(_this, _this.panorama, svCfg);
+        }
       }, 1);
       return this;
     }

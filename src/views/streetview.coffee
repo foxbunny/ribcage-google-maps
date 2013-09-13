@@ -292,8 +292,32 @@ define (require) ->
         position: @getCtrlPos cfg.streetViewZoomControl
         style: @getZoomCtrlStyle cfg.streetViewZoomControlStyle
 
+    # ## `#initialize(settings)`
+    #
+    # The settings object may contain `svExtraConfigs` key which will be used
+    # to override any of the view's settings during rendering.
+    #
+    # Unlike the `MapView`, this view doesn't do any data-binding. It will not
+    # render more than once.
+    #
     initialize: ({@svExtraConfigs}) ->
 
+    # ### `#render(cb)`
+    #
+    # Renders the Street View panorama and stores the reference to rendered
+    # panorama as `this.panorama`.
+    #
+    # Unlike standard synchronous `#render()` methods, this render method will
+    # return `this` before rendering the panorama. Rendering happens with a
+    # slight delay of 1ms, which is not significant, but gives the
+    # application enough time to attach `el` to the DOM tree and prevent the
+    # map from rendering in a 0-height box (essentially hidden away).
+    #
+    # A single callback function can be specified which is called as soon as
+    # the new map instance is created. The callback will receive three
+    # arguments, a reference to the view, a reference to the panorama instance,
+    # and an object containing the configuration used to create the panorama.
+    #
     render: (cb) ->
       return if @panorama
 
@@ -304,11 +328,21 @@ define (require) ->
         svContainer = @getStreetViewContainer()
         svCfg = @getStreetViewOpts @svExtraConfigs, @model
         @panorama = new maps.StreetViewPanorama svContainer, svCfg
+        cb(this, @panorama, svCfg) if type cb, 'function'
       , 1
 
       this
 
+  # ## `StreetView`
+  #
+  # Please see the documentation for [`streetViewMixin`](#streetviewmixin) for
+  # more information on this view's API.
+  #
   StreetView = BaseView.extend streetViewMixin
 
+  # ## Exports
+  #
+  # This module exports `mixin` and `View` properties.
+  #
   mixin: streetViewMixin
   View: StreetView

@@ -36,3 +36,5 @@ you are not using an AMD module loader, you _must_ load this module first.
    of a single map marker and its info window.
  + [MarkersView](views/markers.mkd) - Handles the rendering and
    presentation of a collection of markers with related views.
+ + [StreetView](views/streetview.mkd) - Handles rendering of stand-alone
+   Street View panoramas
