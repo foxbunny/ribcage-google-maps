@@ -18,12 +18,19 @@ This module depends on Google Maps JavaScript API v3 library, Underscore, and
    - [`#markerDraggable`](#markerdraggable)
    - [`#markerIcon`](#markericon)
    - [`#markerShape`](#markershape)
+   - [`#markerSize`](#markersize)
+   - [`#markerOrigin`](#markerorigin)
+   - [`#markerImageSize`](#markerimagesize)
+   - [`#markerAnchor`](#markeranchor)
    - [`#markerVisible`](#markervisible)
    - [`#infoTemplateSource`](#infotemplatesource)
    - [`#infoTemplate(data)`](#infotemplate-data)
    - [`#infoWindowAutoPan`](#infowindowautopan)
    - [`#infoWindowOffset`](#infowindowoffset)
    - [`#createInfoWindow(data)`](#createinfowindow-data)
+   - [`#getPoint(xy)`](#getpoint-xy)
+   - [`#getSize(xy)`](#getsize-xy)
+   - [`#getMarkerIcon()`](#getmarkericon)
    - [`#getMarkerAnim(v)`](#getmarkeranim-v)
    - [`#onClick()`](#onclick)
    - [`#render()`](#render)
@@ -45,6 +52,10 @@ associated info window will be taken care of by it.
 
 The `settings` must contain a `map` key which should be a valid
 `google.maps.Map` object.
+
+The `others` key may be passed that points to the superview that manages a
+marker collection. This is not used in any way by this view, but may be useful
+if you are doing something in views that extend this constructor.
 
 During initialization, the `#render()` method is bound to model's change event
 and the view is rerendered each time the model is updated.
@@ -85,6 +96,30 @@ s://developers.google.com/maps/documentation/javascript/reference#MarkerShape).
 
 Default is `null`.
 
+### `#markerSize` <a name="markersize"></a>
+
+Sets the marker size if `#markerIcon` is a string. It should be an array of two
+integers. Default is `null`.
+
+### `#markerOrigin` <a name="markerorigin"></a>
+
+Origin point within the source image. This is used when using sprites, to
+specify the top left corner of the icon within the sprite. It should be an
+array of x and y coordinates. Default is `null`.
+
+### `#markerImageSize` <a name="markerimagesize"></a>
+
+Portion of the source image to use. This is useful when using sprites, to
+specify the part of the image the sprite corresponds to, along with
+`#markerOrigin` property. It should be an array of width and height integers.
+Default is `null`.
+
+### `#markerAnchor` <a name="markeranchor"></a>
+
+Sets the anchor point of the marker relative to the image scaled to
+`#markerSize`. It should be an array of x and y coordinates. Default is `null`
+which sets the anchor to middle of the image's bottom edge.
+
 ### `#markerVisible` <a name="markervisible"></a>
 
 Whether marker is visible by default. Default is `true`.
@@ -115,6 +150,20 @@ The offset in pixels from the position at which it is rendered. Default is 0.
 ### `#createInfoWindow(data)` <a name="createinfowindow-data"></a>
 
 Create a `google.maps.InfoWindow` object from given context data.
+
+### `#getPoint(xy)` <a name="getpoint-xy"></a>
+
+Returns a `google.maps.Point` object constructed from an array `xy` that
+contains the x and y coordinates.
+
+### `#getSize(xy)` <a name="getsize-xy"></a>
+
+Returns a `google.maps.Size` object constructed from an array `xy` that cotains
+the width and height.
+
+### `#getMarkerIcon()` <a name="getmarkericon"></a>
+
+Returns an object compliant with `google.maps.Icon` specification.
 
 ### `#getMarkerAnim(v)` <a name="getmarkeranim-v"></a>
 

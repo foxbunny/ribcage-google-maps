@@ -33,8 +33,9 @@ This module depends on Google Maps API v3 library, Underscore, jQuery, and
    - [`#scaleControl`](#scalecontrol)
    - [`#zoomControl`](#zoomcontrol)
    - [`#zoomControlStyle`](#zoomcontrolstyle)
-   - [`overview`](#overview)
-   - [`streetView`](#streetview)
+   - [`#overview`](#overview)
+   - [`#styles`](#styles)
+   - [`#streetView`](#streetview)
    - [`#streetViewContainer`](#streetviewcontainer)
    - [`#streetViewControl`](#streetviewcontrol)
    - [`#streetViewDefaultUI`](#streetviewdefaultui)
@@ -58,7 +59,7 @@ This module depends on Google Maps API v3 library, Underscore, jQuery, and
    - [`#getStreetViewContainer()`](#getstreetviewcontainer)
    - [`#getStreetView(cfg)`](#getstreetview-cfg)
    - [`#getMapOpts([cfg,] data)`](#getmapopts-cfg-data)
-   - [`#render()`](#render)
+   - [`#render(cb)`](#render-cb)
  + [`MapView`](#mapview)
  + [Exports](#exports)
 
@@ -289,7 +290,7 @@ Can be any of the following values:
 
 Default is null.
 
-### `overview` <a name="overview"></a>
+### `#overview` <a name="overview"></a>
 
 The overview control options. Can be any of the following:
 
@@ -300,7 +301,12 @@ The overview control options. Can be any of the following:
 
 Default is `false`
 
-### `streetView` <a name="streetview"></a>
+### `#styles` <a name="styles"></a>
+
+The map stylers array compliant with `google.maps.MapTypeStyle` object
+specification. Default is `[]` (empty array).
+
+### `#streetView` <a name="streetview"></a>
 
 Whether Street View is visible by default or not. Default is `false`.
 
@@ -500,9 +506,20 @@ constructor or `mapConfig` keys.
 The view will also bind its `#render()` method to model's change event so the
 map will update automatically whenever model data changes.
 
-### `#render()` <a name="render"></a>
+### `#render(cb)` <a name="render-cb"></a>
 
 Renders the map and stores the reference to rendered map as `this.map`.
+
+Unlike standard synchronous `#render()` methods, this render method will return
+`this` before rendering the map. Rendering happens with a slight delay of 1ms,
+which is not significant, but gives the application enough time to attach `el`
+to the DOM tree and prevent the map from rendering in a 0-height box
+(essentially hidden away).
+
+A single callback function can be specified which is called as soon as the new
+map instance is created. The callback will receive three arguments, a reference
+to the view, a reference to the map instance, and an object containing the
+configuration used to create the map.
 
 ## `MapView` <a name="mapview"></a>
 
