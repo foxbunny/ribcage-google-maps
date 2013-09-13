@@ -11,6 +11,31 @@ loader such as RequireJS.
 This module depends on Google Maps API v3 library, Underscore, jQuery, and
 `ribcage.views.BaseView`.
 
+ + [`streetViewMixin`](#streetviewmixin)
+   - [`#template`](#template)
+   - [`#streetViewContainer`](#streetviewcontainer)
+   - [`#visible`](#visible)
+   - [`#streetViewDefaultUI`](#streetviewdefaultui)
+   - [`#streetViewWheel`](#streetviewwheel)
+   - [`#streetViewAddressControl`](#streetviewaddresscontrol)
+   - [`#streetViewClickToGo`](#streetviewclicktogo)
+   - [`#streetViewDblClickZoom`](#streetviewdblclickzoom)
+   - [`#streetViewCloseButton`](#streetviewclosebutton)
+   - [`#streetViewImageDates`](#streetviewimagedates)
+   - [`#streetViewLinks`](#streetviewlinks)
+   - [`#streetViewPanControl`](#streetviewpancontrol)
+   - [`#streetViewZoomControl`](#streetviewzoomcontrol)
+   - [`#streetViewZoomControlStyle`](#streetviewzoomcontrolstyle)
+   - [`#getCtrlPos(v)`](#getctrlpos-v)
+   - [`#getZoomCtrlStyle(v)`](#getzoomctrlstyle-v)
+   - [`#getStreetViewContainer()`](#getstreetviewcontainer)
+   - [`#getStreetViewOpts(cfg, data)`](#getstreetviewopts-cfg-data)
+ + [`#initialize(settings)`](#initialize-settings)
+   - [`#render(cb)`](#render-cb)
+ + [`StreetView`](#streetview)
+ + [Exports](#exports)
+
+
 ## `streetViewMixin` <a name="streetviewmixin"></a>
 
 This mixin implements the API for the `StreetView`.
@@ -37,28 +62,6 @@ view's `el`. Default is null (use same element as map).
 ### `#visible` <a name="visible"></a>
 
 Whether Street View is visible by default or not. Default is `true`.
-
-### `#streetViewControl` <a name="streetviewcontrol"></a>
-
-Position of the Street View control (the pegman). Any of the following:
-
- + 'bottom_center'
- + 'bottom_left'
- + 'bottom_right'
- + 'left_bottom'
- + 'left_center'
- + 'left_top'
- + 'right_bottom'
- + 'right_center'
- + 'right_top'
- + 'top_center'
- + 'top_left'
- + 'top_right'
- + `false` (disabled)
- + `true` (enabled in default position)
-
-
-Default is `true`.
 
 ### `#streetViewDefaultUI` <a name="streetviewdefaultui"></a>
 

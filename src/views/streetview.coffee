@@ -40,6 +40,9 @@ define (require) ->
   {View: BaseView} = require 'ribcage/views/base'
   maps = require '../gmaps'
 
+  # ::TOC::
+  #
+
   # ## `streetViewMixin`
   #
   # This mixin implements the API for the `StreetView`.
