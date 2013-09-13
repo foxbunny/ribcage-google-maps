@@ -32,6 +32,7 @@ define () ->
   mapView = require './views/map'
   markerView = require './views/marker'
   markersView = require './views/markers'
+  streetView = require './views/streetview'
 
   # ::TOC::
   #
@@ -77,17 +78,21 @@ define () ->
   #    of a single map marker and its info window.
   #  + [MarkersView](views/markers.mkd) - Handles the rendering and
   #    presentation of a collection of markers with related views.
+  #  + [StreetView](views/streetview.mkd) - Handles rendering of stand-alone
+  #    Street View panoramas
   #
   views:
     mapView: mapView
     markerView: markerView
     markersView: markersView
+    streetView: streetView
     MapView: mapView.View
     MarkerView: markerView.View
     MarkersView: markersView.View
+    StreetView: streetView.View
 
   viewMixins:
     MapView: mapView.mixin
     MarkerView: markerView.mixin
     MarkersView: markersView.mixin
-
+    StreetView: streetView.mixin
