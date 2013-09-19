@@ -1,0 +1,11 @@
+# Ribcage-Google-Maps changelog
+
+## Dev
+
+### Fixed marker position update bug
+
+The marker position wasn't being reset when the marker view rerenders. This is
+now fixes so updating the marker coordinates in the model updates the marker on
+the map.
+
+
