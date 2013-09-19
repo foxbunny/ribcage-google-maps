@@ -279,6 +279,7 @@ define (require) ->
 
       if @marker?
         @marker.setOptions cfg
+        @marker.setPosition @model.coords()
       else
         @marker = new maps.Marker cfg
         maps.event.addListener @marker, 'click', () =>

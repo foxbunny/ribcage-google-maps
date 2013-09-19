@@ -132,6 +132,7 @@ define(function(require) {
       };
       if (this.marker != null) {
         this.marker.setOptions(cfg);
+        this.marker.setPosition(this.model.coords());
       } else {
         this.marker = new maps.Marker(cfg);
         maps.event.addListener(this.marker, 'click', function() {
