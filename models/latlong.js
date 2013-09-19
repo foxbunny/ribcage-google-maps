@@ -11,7 +11,7 @@ define = (function(root) {
         var _ref;
         switch (dep) {
           case 'ribcage/models/base':
-            return root.ribcage.models.basreModel;
+            return root.ribcage.models.baseModel;
           case '../gmaps':
             return (_ref = root.google) != null ? _ref.maps : void 0;
           default:

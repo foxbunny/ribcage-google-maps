@@ -16,7 +16,7 @@ define = ((root) ->
     require = (dep) ->
       (() ->
         switch dep
-          when 'ribcage/models/base' then root.ribcage.models.basreModel
+          when 'ribcage/models/base' then root.ribcage.models.baseModel
           when '../gmaps' then root.google?.maps
           else null
       )() or throw new Error "Unmet dependency #{dep}"
