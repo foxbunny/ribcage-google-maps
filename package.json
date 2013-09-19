@@ -26,6 +26,7 @@
       "dahelpers": "foxbunny/dahelpers/>=0.2.4"
     },
     "ignore": [
+      "node_modules",
       "package.json",
       ".gitignore",
       "CHANGES.mkd",
