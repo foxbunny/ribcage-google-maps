@@ -2,20 +2,34 @@
 var define;
 
 define = (function(root) {
+  var require;
   if (typeof root.define === 'function' && root.define.amd) {
     return define;
   } else {
+    require = function(dep) {
+      return (function() {
+        switch (dep) {
+          case 'ribcage/collections/base':
+            return root.ribcage.collections.baseCollection;
+          default:
+            return null;
+        }
+      })() || (function() {
+        throw new Error("Unmet dependency " + dep);
+      })();
+    };
     return function(factory) {
-      var module;
-      module = factory();
-      root.ribcageGoogleMaps.collections.markersCollection = module;
-      root.ribcageGoogleMaps.collections.MarkersCollection = module.Model;
-      return root.ribcageGoogleMaps.collectionMixins.MarkersCollection = module.mixin;
+      var m, r;
+      m = factory(require);
+      r = root.ribcageGoogleMaps;
+      r.collections.markersCollection = m;
+      r.collections.MarkersCollection = m.Model;
+      return r.collectionMixins.MarkersCollection = m.mixin;
     };
   }
 })(this);
 
-define(function() {
+define(function(require) {
   var BaseCollection, MarkersCollection, markersCollectionMixin;
   BaseCollection = require('ribcage/collections/base').Collection;
   markersCollectionMixin = {};

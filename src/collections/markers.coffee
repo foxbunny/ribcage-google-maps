@@ -13,14 +13,22 @@ define = ((root) ->
   if typeof root.define is 'function' and root.define.amd
     return define
   else
+    require = (dep) ->
+      (() ->
+        switch dep
+          when 'ribcage/collections/base' then root.ribcage.collections.baseCollection
+          else null
+      )() or throw new Error "Unmet dependency #{dep}"
     (factory) ->
-      module = factory()
-      root.ribcageGoogleMaps.collections.markersCollection = module
-      root.ribcageGoogleMaps.collections.MarkersCollection = module.Model
-      root.ribcageGoogleMaps.collectionMixins.MarkersCollection = module.mixin
+      m = factory(require)
+      r = root.ribcageGoogleMaps
+      r.collections.markersCollection = m
+      r.collections.MarkersCollection = m.Model
+      r.collectionMixins.MarkersCollection = m.mixin
 ) this
 
-define () ->
+
+define (require) ->
 
   # This module depeds on `ribcage.collections.BaseCollection`
   #
