@@ -1,6 +1,10 @@
 # Ribcage-Google-Maps changelog
 
-## Dev
+## 0.0.3
+
+### Fixed bad require bug in Markers collection
+
+The right version of `require` wasn't being used. This is now fixed.
 
 ### Fixed marker position update bug
 
