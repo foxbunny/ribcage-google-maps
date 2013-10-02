@@ -36,11 +36,12 @@ define = (function(root) {
 })(this);
 
 define(function(require) {
-  var BaseView, StreetView, clone, maps, streetViewMixin, type, _, _ref;
+  var BaseView, StreetView, clone, maps, streetViewMixin, svService, type, _, _ref;
   _ = require('underscore');
   _ref = require('dahelpers'), type = _ref.type, clone = _ref.clone;
   BaseView = require('ribcage/views/base').View;
   maps = require('../gmaps');
+  svService = new google.maps.StreetViewService();
   streetViewMixin = {
     template: '',
     streetViewContainer: null,
@@ -115,7 +116,7 @@ define(function(require) {
           position: this.getCtrlPos(cfg.streetViewPanControl)
         },
         scrollWheel: cfg.streetViewWheel,
-        visible: cfg.visible,
+        visible: false,
         zoomControl: !!cfg.streetViewZoomControl,
         zoomControlOptions: {
           position: this.getCtrlPos(cfg.streetViewZoomControl),
@@ -126,24 +127,41 @@ define(function(require) {
     initialize: function(_arg) {
       this.svExtraConfigs = _arg.svExtraConfigs;
     },
-    render: function(cb) {
+    noStreetView: function(config, callback) {
+      alert("Street view data is not available for this location");
+      if (callback != null) {
+        return callback(this, this.panorama, config);
+      }
+    },
+    beforeRender: function(config, renderCallback, callback) {
       var _this = this;
+      return svService.getPanoramaByLocation(config.position, 50, function(data, status) {
+        if (status !== maps.StreetViewStatus.OK) {
+          return _this.noStreetView(config, renderCallback);
+        }
+        return callback(data);
+      });
+    },
+    render: function(cb) {
+      var svCfg, svContainer,
+        _this = this;
       if (this.panorama) {
         return;
       }
       this.$el.html(type(this.template, 'function') ? this.template() : this.template);
-      setTimeout(function() {
-        var svCfg, svContainer;
-        if (_this.panorama) {
-          return;
-        }
-        svContainer = _this.getStreetViewContainer();
-        svCfg = _this.getStreetViewOpts(_this.svExtraConfigs, _this.model);
+      if (this.panorama) {
+        return;
+      }
+      svContainer = this.getStreetViewContainer();
+      svCfg = this.getStreetViewOpts(this.svExtraConfigs, this.model);
+      this.beforeRender(svCfg, cb, function(data) {
         _this.panorama = new maps.StreetViewPanorama(svContainer, svCfg);
+        _this.panorama.setPano(data.location.pano);
+        _this.panorama.setVisible(_this.visible);
         if (type(cb, 'function')) {
           return cb(_this, _this.panorama, svCfg);
         }
-      }, 1);
+      });
       return this;
     }
   };

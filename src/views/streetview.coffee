@@ -39,6 +39,7 @@ define (require) ->
   {type, clone} = require 'dahelpers'
   {View: BaseView} = require 'ribcage/views/base'
   maps = require '../gmaps'
+  svService = new google.maps.StreetViewService()
 
   # ::TOC::
   #
@@ -265,7 +266,7 @@ define (require) ->
       panControlOptions:
         position: @getCtrlPos cfg.streetViewPanControl
       scrollWheel: cfg.streetViewWheel
-      visible: cfg.visible
+      visible: false
       zoomControl: !!cfg.streetViewZoomControl
       zoomControlOptions:
         position: @getCtrlPos cfg.streetViewZoomControl
@@ -280,6 +281,47 @@ define (require) ->
     # render more than once.
     #
     initialize: ({@svExtraConfigs}) ->
+      return
+
+    # ## `noStreetView(config, callback)`
+    #
+    # Called when there is no street view data for the given location.
+    #
+    # Default implementation simply alerts an error message: "Street view data
+    # is not available for this location".
+    #
+    # `config` object is the configuration object that was going to be used to
+    # create the panorama.
+    #
+    # `callback` is the callback originally passed to `#render()` method. It
+    # should be invoked in this method with this view as first argument,
+    # view's panorama property as second, and configuration object as third
+    # parameter.
+    #
+    noStreetView: (config, callback) ->
+      alert "Street view data is not available for this location"
+      callback this, @panorama, config if callback?
+
+    # ## `#beforeRender(config, renderCallback, callback)`
+    #
+    # Try to obtain streetview data directly first, to see if there is any.
+    # Lets render proceed normally if there is data, otherwise calls
+    # `#noStreetView()` method.
+    #
+    # `config` parameter is the configuration object that is going to be used
+    # for the panorama.
+    #
+    # `renderCallback` is the callback originally passed to the `#render()`
+    # method.
+    #
+    # `callback` function is called only if data is available. It should
+    # expect `google.maps.StreetViewData` object as its sole argument.
+    #
+    beforeRender: (config, renderCallback, callback) ->
+      svService.getPanoramaByLocation config.position, 50, (data, status) =>
+        if status isnt maps.StreetViewStatus.OK
+          return @noStreetView config, renderCallback
+        callback(data)
 
     # ### `#render(cb)`
     #
@@ -302,13 +344,18 @@ define (require) ->
 
       @$el.html if type @template, 'function' then @template() else @template
 
-      setTimeout () =>
-        return if @panorama
-        svContainer = @getStreetViewContainer()
-        svCfg = @getStreetViewOpts @svExtraConfigs, @model
+      return if @panorama
+      svContainer = @getStreetViewContainer()
+      svCfg = @getStreetViewOpts @svExtraConfigs, @model
+
+      @beforeRender svCfg, cb, (data) =>
+        ## This callback function is only called if street view data is
+        ## available for the given location. When the data is not available
+        ## the `#noStreetView()` method is called instead.
         @panorama = new maps.StreetViewPanorama svContainer, svCfg
+        @panorama.setPano data.location.pano
+        @panorama.setVisible @visible
         cb(this, @panorama, svCfg) if type cb, 'function'
-      , 1
 
       this
 
