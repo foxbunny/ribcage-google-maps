@@ -31,6 +31,8 @@ This module depends on Google Maps API v3 library, Underscore, jQuery, and
    - [`#getStreetViewContainer()`](#getstreetviewcontainer)
    - [`#getStreetViewOpts(cfg, data)`](#getstreetviewopts-cfg-data)
  + [`#initialize(settings)`](#initialize-settings)
+ + [`noStreetView(config, callback)`](#nostreetview-config-callback)
+ + [`#beforeRender(config, renderCallback, callback)`](#beforerender-config-rendercallback-callback)
    - [`#render(cb)`](#render-cb)
  + [`StreetView`](#streetview)
  + [Exports](#exports)
@@ -191,6 +193,34 @@ override any of the view's settings during rendering.
 
 Unlike the `MapView`, this view doesn't do any data-binding. It will not render
 more than once.
+
+## `noStreetView(config, callback)` <a name="nostreetview-config-callback"></a>
+
+Called when there is no street view data for the given location.
+
+Default implementation simply alerts an error message: "Street view data is not
+available for this location".
+
+`config` object is the configuration object that was going to be used to create
+the panorama.
+
+`callback` is the callback originally passed to `#render()` method. It should
+be invoked in this method with this view as first argument, view's panorama
+property as second, and configuration object as third parameter.
+
+## `#beforeRender(config, renderCallback, callback)` <a name="beforerender-config-rendercallback-callback"></a>
+
+Try to obtain streetview data directly first, to see if there is any. Lets
+render proceed normally if there is data, otherwise calls `#noStreetView()`
+method.
+
+`config` parameter is the configuration object that is going to be used for the
+panorama.
+
+`renderCallback` is the callback originally passed to the `#render()` method.
+
+`callback` function is called only if data is available. It should expect
+`google.maps.StreetViewData` object as its sole argument.
 
 ### `#render(cb)` <a name="render-cb"></a>
 
