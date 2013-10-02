@@ -1,5 +1,13 @@
 # Ribcage-Google-Maps changelog
 
+## 0.0.4
+
+### Added check for streetview to see if the location is available
+
+StreetView view will now check if the street view is available at given
+location (within 50m radius) before displaying the street view. If no street
+view is available, a `#noStreetView()` method is invoked instead of rendering.
+
 ## 0.0.3
 
 ### Fixed bad require bug in Markers collection
