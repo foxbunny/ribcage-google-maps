@@ -18,6 +18,8 @@ you are not using an AMD module loader, you _must_ load this module first.
    prepresents coordinates.
  + [MapDataModel](models/map_data.mkd) - Handles basic map data
    (position, heading, pov).
+ + [AddressModel](models/address.mkd) - Same as `MapDataModel` but with
+   geocoding support to set coordinates from address.
  + [MarkerModel](models/marker.mkd) - Represents the data for a single
    marker and associated info window.
 

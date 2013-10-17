@@ -26,6 +26,7 @@ define () ->
   latLongModel = require './models/latlong'
   mapDataModel = require './models/map_data'
   markerModel = require './models/marker'
+  addressMOdel = require './models/address'
 
   markersCollection = require './collections/markers'
 
@@ -43,19 +44,24 @@ define () ->
   #    prepresents coordinates.
   #  + [MapDataModel](models/map_data.mkd) - Handles basic map data
   #    (position, heading, pov).
+  #  + [AddressModel](models/address.mkd) - Same as `MapDataModel` but with
+  #    geocoding support to set coordinates from address.
   #  + [MarkerModel](models/marker.mkd) - Represents the data for a single
   #    marker and associated info window.
   #
   models:
     latLongModel: latLongModel
     mapDataModel: mapDataModel
+    addressModel: addressModel
     markerModel: markerModel
     LatLongModel: latLongModel.Model
     MapDataModel: mapDataModel.Model
+    AddressModel: addressModel.Model
     MarkerModel: markerModel.Model
 
   modelMixins:
     MapDataModel: mapDataModel.mixin
+    AddressModel: addressModel.mixin
     MarkerModel: markerModel.mixin
 
   # ## Collections

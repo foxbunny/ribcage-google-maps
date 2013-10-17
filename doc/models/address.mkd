@@ -1,0 +1,54 @@
+# Address model <a name="address-model"></a>
+
+This model is a `MapData` subclass that returns coordinates based on address
+using the [Geocoder
+/developers.google.com/maps/documentation/javascript/3.exp/reference#Geocoder).
+
+This module is in UMD format. It will create
+`ribcageGoogleMaps.models.addressModel`, `ribcageGoogleMaps.models.Address`,
+and `ribcageGoogleMaps.modelMixins.Address` globals if not used with an AMD
+loader such as RequireJS.
+
+This module depends on DaHelpers, Google Maps API v3 library and
+`ribcageGoogleMaps.models.MapData`.
+
+ + [`addressModelMixin`](#addressmodelmixin)
+   - [`#setLocation(geocoderResponse)`](#setlocation-geocoderresponse)
+   - [`#address([address, callback])`](#address-address-callback)
+ + [`LatLongModel`](#latlongmodel)
+ + [Exports](#exports)
+
+
+## `addressModelMixin` <a name="addressmodelmixin"></a>
+
+This mixin implements the API of the `AddressModel`.
+
+### `#setLocation(geocoderResponse)` <a name="setlocation-geocoderresponse"></a>
+
+Sets the location based on geocoder response array.
+
+### `#address([address, callback])` <a name="address-address-callback"></a>
+
+This is an accessor for the `address` attribute. The setter will request the
+coordinates for the address and set appropriate latitude and longitude.
+
+The setter is asynchornous, so the `callback` function can be passed, which is
+invoked with the model instance once the request is completed.
+
+The callback function has the following signature:
+
+    callback(err, model)
+
+
+ + `err`: Error status (`null` if there were no errors)
+ + `model`: model instance (if there are no errors)
+
+
+## `LatLongModel` <a name="latlongmodel"></a>
+
+Please see the documentation for [`latLongModelMixin`](#latlongmodelmixin) for
+more information about this model's API.
+
+## Exports <a name="exports"></a>
+
+This module exports `mixin` and `Model` properties.
