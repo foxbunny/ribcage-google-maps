@@ -1,6 +1,6 @@
 # Ribcage-Google-Maps changelog
 
-## Dev
+## 0.1.0
 
 ### `StreetView` view and true heading
 
