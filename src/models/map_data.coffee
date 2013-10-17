@@ -62,7 +62,7 @@ define (require) ->
       if not v?
         @get 'heading'
       else
-        @set heading: parseFloat v
+        @set 'heading', v
 
     # ### `#pitch(v)`
     #
@@ -77,7 +77,7 @@ define (require) ->
       if not v?
         @get 'pitch'
       else
-        @set pitch: parseFloat v
+        @set 'pitch', v
 
   # ### `MapDataModel`
   #

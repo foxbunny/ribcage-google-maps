@@ -44,18 +44,14 @@ define(function(require) {
       if (v == null) {
         return this.get('heading');
       } else {
-        return this.set({
-          heading: parseFloat(v)
-        });
+        return this.set('heading', v);
       }
     },
     pitch: function(v) {
       if (v == null) {
         return this.get('pitch');
       } else {
-        return this.set({
-          pitch: parseFloat(v)
-        });
+        return this.set('pitch', v);
       }
     }
   };

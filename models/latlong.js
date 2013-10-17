@@ -44,23 +44,19 @@ define(function(require) {
       if (v == null) {
         return this.get('lat');
       } else {
-        return this.set({
-          lat: parseFloat(v)
-        });
+        return this.set('lat', v);
       }
     },
     long: function(v) {
       if (v == null) {
         return this.get('long');
       } else {
-        return this.set({
-          long: parseFloat(v)
-        });
+        return this.set('long', v);
       }
     },
     coords: function(lat, long) {
       if ((lat == null) || (long == null)) {
-        return new LatLng(this.lat(), this.long(), false);
+        return new LatLng(this.lat(), this.long());
       } else {
         this.lat(lat);
         return this.long(long);

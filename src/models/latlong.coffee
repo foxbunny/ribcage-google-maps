@@ -60,7 +60,7 @@ define (require) ->
       if not v?
         @get 'lat'
       else
-        @set lat: parseFloat v
+        @set 'lat', v
 
     # ### `#long([v])`
     #
@@ -75,7 +75,7 @@ define (require) ->
       if not v?
         @get 'long'
       else
-        @set long: parseFloat v
+        @set 'long', v
 
     # ### `#coords([lat, long])`
     #
@@ -89,7 +89,7 @@ define (require) ->
     #
     coords: (lat, long) ->
       if not lat? or not long?
-        new LatLng @lat(), @long(), false
+        new LatLng @lat(), @long()
       else
         @lat(lat)
         @long(long)
