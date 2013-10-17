@@ -17,6 +17,9 @@ This module depends on Google Maps API v3 library, Underscore, jQuery, and
    - [`#visible`](#visible)
    - [`#streetViewDefaultUI`](#streetviewdefaultui)
    - [`#streetViewWheel`](#streetviewwheel)
+   - [`#maxSearchRadius`](#maxsearchradius)
+   - [`#ignoreHeading`](#ignoreheading)
+   - [`#defaultHeading`](#defaultheading)
    - [`#streetViewAddressControl`](#streetviewaddresscontrol)
    - [`#streetViewClickToGo`](#streetviewclicktogo)
    - [`#streetViewDblClickZoom`](#streetviewdblclickzoom)
@@ -26,6 +29,7 @@ This module depends on Google Maps API v3 library, Underscore, jQuery, and
    - [`#streetViewPanControl`](#streetviewpancontrol)
    - [`#streetViewZoomControl`](#streetviewzoomcontrol)
    - [`#streetViewZoomControlStyle`](#streetviewzoomcontrolstyle)
+   - [`#getTrueHeading(target, actual)`](#gettrueheading-target-actual)
    - [`#getCtrlPos(v)`](#getctrlpos-v)
    - [`#getZoomCtrlStyle(v)`](#getzoomctrlstyle-v)
    - [`#getStreetViewContainer()`](#getstreetviewcontainer)
@@ -72,6 +76,23 @@ Whether all of default UI is enabled. Default is `true`.
 ### `#streetViewWheel` <a name="streetviewwheel"></a>
 
 Whether scroll wheel zooming is enabled in Street View. Default is `true`.
+
+### `#maxSearchRadius` <a name="maxsearchradius"></a>
+
+The maximum search radius in which to lookg for available panorama. 50 is the
+minimum and default value. Use larger values to ensure that streetview is
+always displayed even if not available at specified location.
+
+### `#ignoreHeading` <a name="ignoreheading"></a>
+
+Ignore the heading and attempt to recalculate the heading based on the
+difference between actual location and intended location. Default is `false`
+(use model data).
+
+### `#defaultHeading` <a name="defaultheading"></a>
+
+Default heading when ignoring the heading in the model data and the actual and
+intended locations are the same. Default is 0.
 
 ### `#streetViewAddressControl` <a name="streetviewaddresscontrol"></a>
 
@@ -169,6 +190,14 @@ Can be any of the following values:
 
 
 Default is null.
+
+### `#getTrueHeading(target, actual)` <a name="gettrueheading-target-actual"></a>
+
+Returns the true heading based on desired latitude and longitude, and actual
+latitude and longitude of the street view. Returns 0 if the target location is
+the same as actual location.
+
+Both arguments are excepted to be `google.maps.LatLng` objects.
 
 ### `#getCtrlPos(v)` <a name="getctrlpos-v"></a>
 
