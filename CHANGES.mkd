@@ -1,5 +1,14 @@
 # Ribcage-Google-Maps changelog
 
+## Dev
+
+### Added `AddressModel` with support for geocoding
+
+The new model uses Google's geocoding service to set the coordinates on the
+model, and is otherwise exactly the same as `MapData`. If you need to support
+both geocoding and non-geocoding scenarios you can safely use AddressModel as a
+drop-in replacement.
+
 ## 0.0.4
 
 ### Added check for streetview to see if the location is available
