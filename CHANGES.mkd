@@ -2,6 +2,18 @@
 
 ## Dev
 
+### `StreetView` view and true heading
+
+The `StreetView` view now has an option of completely ignoring the heading
+information stored in the model and setting a heading based on the difference
+between the location in the model and the actual location of the streetview.
+
+### `LatLongModel` and `MapDataModel` no longer parse values
+
+The two models no longer try to parse the values in the `#long()`, `#lat()`,
+`#heading()` and `#pov()` accessors. They will set any value passed to them and
+let the `google.maps.LatLng` object take care of any necessary conversion.
+
 ### Added `AddressModel` with support for geocoding
 
 The new model uses Google's geocoding service to set the coordinates on the
