@@ -41,6 +41,9 @@ define (require) ->
   maps = require '../gmaps'
   svService = new google.maps.StreetViewService()
 
+  DEGREES_PER_RADIAN = 57.2957795
+  RADIANS_PER_DEGREE = 0.017453
+
   # ::TOC::
   #
 
@@ -91,6 +94,30 @@ define (require) ->
     # `true`.
     #
     streetViewWheel: true
+
+    # ### `#maxSearchRadius`
+    #
+    # The maximum search radius in which to lookg for available panorama. 50 is
+    # the minimum and default value. Use larger values to ensure that
+    # streetview is always displayed even if not available at specified
+    # location.
+    #
+    maxSearchRadius: 50
+
+    # ### `#ignoreHeading`
+    #
+    # Ignore the heading and attempt to recalculate the heading based on the
+    # difference between actual location and intended location. Default is
+    # `false` (use model data).
+    #
+    ignoreHeading: false
+
+    # ### `#defaultHeading`
+    #
+    # Default heading when ignoring the heading in the model data and the
+    # actual and intended locations are the same. Default is 0.
+    #
+    defaultHeading: 0
 
     # ### `#streetViewAddressControl`
     #
@@ -202,6 +229,29 @@ define (require) ->
     # Default is null.
     #
     streetViewZoomControlStyle: null
+
+    # ### `#getTrueHeading(target, actual)`
+    #
+    # Returns the true heading based on desired latitude and longitude, and
+    # actual latitude and longitude of the street view. Returns 0 if the
+    # target location is the same as actual location.
+    #
+    # Both arguments are excepted to be `google.maps.LatLng` objects.
+    #
+    getTrueHeading: (target, actual) ->
+      targetLat = target.lat()
+      targetLong = target.lng()
+      lat = actual.lat()
+      long = actual.lng()
+      if targetLat is lat and targetLong is long
+        return @defaultHeading
+      deltaLat = targetLat - lat
+      deltaLong = targetLong - long
+      yaw = Math.atan2(
+        deltaLong * Math.cos(targetLat * RADIANS_PER_DEGREE), deltaLat
+      ) * DEGREES_PER_RADIAN
+      return yaw if 0 < yaw < 360
+      if yaw < 0 then yaw + 360 else yaw - 360
 
     # ### `#getCtrlPos(v)`
     #
@@ -318,10 +368,12 @@ define (require) ->
     # expect `google.maps.StreetViewData` object as its sole argument.
     #
     beforeRender: (config, renderCallback, callback) ->
-      svService.getPanoramaByLocation config.position, 50, (data, status) =>
+      pos = config.position
+      radius = @maxSearchRadius
+      svService.getPanoramaByLocation pos, radius, (data, status) =>
         if status isnt maps.StreetViewStatus.OK
           return @noStreetView config, renderCallback
-        callback(data)
+        callback data
 
     # ### `#render(cb)`
     #
@@ -354,6 +406,10 @@ define (require) ->
         ## the `#noStreetView()` method is called instead.
         @panorama = new maps.StreetViewPanorama svContainer, svCfg
         @panorama.setPano data.location.pano
+        if @ignoreHeading
+          actualLoc = data.location.latLng
+          heading = @getTrueHeading svCfg.position, data.location.latLng
+          @panorama.setPov heading: heading, pitch: 0
         @panorama.setVisible @visible
         cb(this, @panorama, svCfg) if type cb, 'function'
 

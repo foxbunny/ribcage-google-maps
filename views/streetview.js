@@ -36,18 +36,23 @@ define = (function(root) {
 })(this);
 
 define(function(require) {
-  var BaseView, StreetView, clone, maps, streetViewMixin, svService, type, _, _ref;
+  var BaseView, DEGREES_PER_RADIAN, RADIANS_PER_DEGREE, StreetView, clone, maps, streetViewMixin, svService, type, _, _ref;
   _ = require('underscore');
   _ref = require('dahelpers'), type = _ref.type, clone = _ref.clone;
   BaseView = require('ribcage/views/base').View;
   maps = require('../gmaps');
   svService = new google.maps.StreetViewService();
+  DEGREES_PER_RADIAN = 57.2957795;
+  RADIANS_PER_DEGREE = 0.017453;
   streetViewMixin = {
     template: '',
     streetViewContainer: null,
     visible: true,
     streetViewDefaultUI: true,
     streetViewWheel: true,
+    maxSearchRadius: 50,
+    ignoreHeading: false,
+    defaultHeading: 0,
     streetViewAddressControl: true,
     streetViewClickToGo: true,
     streetViewDblClickZoom: false,
@@ -57,6 +62,27 @@ define(function(require) {
     streetViewPanControl: false,
     streetViewZoomControl: null,
     streetViewZoomControlStyle: null,
+    getTrueHeading: function(target, actual) {
+      var deltaLat, deltaLong, lat, long, targetLat, targetLong, yaw;
+      targetLat = target.lat();
+      targetLong = target.lng();
+      lat = actual.lat();
+      long = actual.lng();
+      if (targetLat === lat && targetLong === long) {
+        return this.defaultHeading;
+      }
+      deltaLat = targetLat - lat;
+      deltaLong = targetLong - long;
+      yaw = Math.atan2(deltaLong * Math.cos(targetLat * RADIANS_PER_DEGREE), deltaLat) * DEGREES_PER_RADIAN;
+      if ((0 < yaw && yaw < 360)) {
+        return yaw;
+      }
+      if (yaw < 0) {
+        return yaw + 360;
+      } else {
+        return yaw - 360;
+      }
+    },
     getCtrlPos: function(v) {
       if ((v == null) || (v === true || v === false)) {
         return void 0;
@@ -134,8 +160,11 @@ define(function(require) {
       }
     },
     beforeRender: function(config, renderCallback, callback) {
-      var _this = this;
-      return svService.getPanoramaByLocation(config.position, 50, function(data, status) {
+      var pos, radius,
+        _this = this;
+      pos = config.position;
+      radius = this.maxSearchRadius;
+      return svService.getPanoramaByLocation(pos, radius, function(data, status) {
         if (status !== maps.StreetViewStatus.OK) {
           return _this.noStreetView(config, renderCallback);
         }
@@ -155,8 +184,17 @@ define(function(require) {
       svContainer = this.getStreetViewContainer();
       svCfg = this.getStreetViewOpts(this.svExtraConfigs, this.model);
       this.beforeRender(svCfg, cb, function(data) {
+        var actualLoc, heading;
         _this.panorama = new maps.StreetViewPanorama(svContainer, svCfg);
         _this.panorama.setPano(data.location.pano);
+        if (_this.ignoreHeading) {
+          actualLoc = data.location.latLng;
+          heading = _this.getTrueHeading(svCfg.position, data.location.latLng);
+          _this.panorama.setPov({
+            heading: heading,
+            pitch: 0
+          });
+        }
         _this.panorama.setVisible(_this.visible);
         if (type(cb, 'function')) {
           return cb(_this, _this.panorama, svCfg);
